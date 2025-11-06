@@ -22,8 +22,9 @@
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-	<key>LSUIElement</key>
-	<true/>
+	<!-- TEMPORARILY DISABLED FOR DEBUGGING - ENABLE FOR RELEASE -->
+	<!-- <key>LSUIElement</key>
+	<true/> -->
 	<key>NSAppleEventsUsageDescription</key>
 	<string>easyshortcut needs permission to read menu structures from active applications to display their keyboard shortcuts.</string>
 	<key>NSHumanReadableCopyright</key>
