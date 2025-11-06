@@ -6,12 +6,12 @@
 //  Exposes active app information through Combine @Published properties for reactive updates.
 //
 
-import Foundation
-import AppKit
-import Combine
+internal import Foundation
+internal import AppKit
+internal import Combine
 
 /// Represents the currently active application with all relevant information
-struct ActiveAppInfo {
+struct ActiveAppInfo: Sendable {
     /// The human-readable name of the active application
     let name: String?
 
@@ -70,7 +70,7 @@ final class AppWatcher: ObservableObject {
     // MARK: - Private Properties
     
     /// Notification observer token for cleanup
-    private var observer: NSObjectProtocol?
+    private var observer: (any NSObjectProtocol)?
     
     // MARK: - Initialization
 
@@ -84,16 +84,24 @@ final class AppWatcher: ObservableObject {
     /// Starts monitoring active application changes using NSWorkspace notifications
     func startMonitoring() {
         guard !isMonitoring else { return }
-        
+
         // Set up notification observer for application activation
         observer = NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.didActivateApplicationNotification,
             object: nil,
             queue: .main
         ) { [weak self] notification in
-            self?.handleApplicationActivation(notification)
+            // Extract app info from notification in nonisolated context
+            guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
+                return
+            }
+
+            // Call MainActor method asynchronously with extracted data
+            Task { @MainActor [weak self] in
+                self?.handleApplicationActivation(app: app)
+            }
         }
-        
+
         isMonitoring = true
         
         // Capture initial state - get the currently active application
@@ -124,20 +132,10 @@ final class AppWatcher: ObservableObject {
     }
     
     // MARK: - Private Methods
-    
-    /// Handles the NSWorkspace.didActivateApplicationNotification
-    /// - Parameter notification: The notification containing the activated application info
-    private func handleApplicationActivation(_ notification: Notification) {
-        // Extract NSRunningApplication from notification userInfo
-        guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
-            // Handle case where app info is missing - clear all properties
-            activeAppInfo = nil
-            activeAppName = nil
-            activeAppBundleID = nil
-            activeApp = nil
-            return
-        }
 
+    /// Handles application activation with the running application
+    /// - Parameter app: The activated NSRunningApplication
+    private func handleApplicationActivation(app: NSRunningApplication) {
         updateActiveApp(app)
     }
     
@@ -178,9 +176,13 @@ final class AppWatcher: ObservableObject {
     }
     
     // MARK: - Cleanup
-    
+
     deinit {
-        stopMonitoring()
+        // Note: deinit is already isolated to MainActor since the class is @MainActor
+        // We need to use assumeIsolated to safely call MainActor methods
+        MainActor.assumeIsolated {
+            stopMonitoring()
+        }
     }
 }
 

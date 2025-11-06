@@ -7,10 +7,11 @@
 //  lifecycle, not SwiftUI's App protocol which doesn't provide direct access to NSStatusBar.
 //
 
-import Cocoa
-import SwiftUI
+internal import Cocoa
+internal import SwiftUI
 
 @main
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var statusBarController: StatusBarController?

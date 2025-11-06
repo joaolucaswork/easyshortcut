@@ -1,13 +1,21 @@
-import Foundation
-import AppKit
-import ApplicationServices
-import Combine
+internal import Foundation
+internal import AppKit
+@preconcurrency import ApplicationServices
+internal import Combine
 
 /// Authorization status for Accessibility API access
-enum AccessibilityAuthorizationStatus {
+enum AccessibilityAuthorizationStatus: Sendable {
     case notDetermined
     case denied
     case authorized
+}
+
+/// Errors that can occur during accessibility operations
+enum AccessibilityError: Error, Sendable {
+    case permissionDenied
+    case menuBarNotAccessible
+    case applicationNotFound
+    case invalidElement
 }
 
 /// Service class that reads menu structures and keyboard shortcuts from the active application using macOS Accessibility APIs
@@ -47,8 +55,12 @@ final class AccessibilityReader: ObservableObject {
     }
     
     deinit {
-        appWatcherCancellable?.cancel()
-        appWatcherCancellable = nil
+        // Note: deinit is already isolated to MainActor since the class is @MainActor
+        // We need to use assumeIsolated to safely access MainActor-isolated properties
+        MainActor.assumeIsolated {
+            appWatcherCancellable?.cancel()
+            appWatcherCancellable = nil
+        }
     }
     
     // MARK: - Setup
@@ -73,10 +85,15 @@ final class AccessibilityReader: ObservableObject {
     }
     
     /// Request accessibility permission from the user
-    func requestAccessibilityPermission() {
+    nonisolated func requestAccessibilityPermission() {
+        // Access the C API constant in a nonisolated context
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
-        checkAuthorizationStatus()
+
+        // Update status on MainActor
+        Task { @MainActor in
+            checkAuthorizationStatus()
+        }
     }
     
     // MARK: - Public Methods
@@ -109,9 +126,10 @@ final class AccessibilityReader: ObservableObject {
         }
         
         lastReadBundleID = activeApp.bundleID
-        
+
         // Get running application
-        guard let runningApp = NSRunningApplication.runningApplications(withBundleIdentifier: activeApp.bundleID).first else {
+        guard let bundleID = activeApp.bundleID,
+              let runningApp = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first else {
             shortcuts = []
             lastError = "Could not find running application"
             return
@@ -127,14 +145,27 @@ final class AccessibilityReader: ObservableObject {
         isReading = true
         defer { isReading = false }
 
+        do {
+            let menuShortcuts = try await readMenusThrows(for: app)
+            shortcuts = menuShortcuts
+            lastError = nil
+        } catch let error as AccessibilityError {
+            shortcuts = []
+            lastError = error.localizedDescription
+        } catch {
+            shortcuts = []
+            lastError = "Unknown error: \(error.localizedDescription)"
+        }
+    }
+
+    /// Reads menu shortcuts with typed throws for better error handling
+    private func readMenusThrows(for app: NSRunningApplication) async throws(AccessibilityError) -> [ShortcutItem] {
         let pid = app.processIdentifier
         let appElement = AXUIElementCreateApplication(pid)
 
         // Get menu bar
         guard let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) else {
-            shortcuts = []
-            lastError = "Could not access menu bar"
-            return
+            throw .menuBarNotAccessible
         }
 
         // Get menu bar children (top-level menus)
@@ -148,8 +179,7 @@ final class AccessibilityReader: ObservableObject {
             allShortcuts.append(contentsOf: menuShortcuts)
         }
 
-        shortcuts = allShortcuts
-        lastError = nil
+        return allShortcuts
     }
 
     // MARK: - Recursive Menu Traversal
@@ -263,6 +293,23 @@ final class AccessibilityReader: ObservableObject {
         }
 
         return array as? [AXUIElement] ?? []
+    }
+}
+
+// MARK: - AccessibilityError Extension
+
+extension AccessibilityError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .permissionDenied:
+            return "Accessibility permission not granted"
+        case .menuBarNotAccessible:
+            return "Could not access menu bar"
+        case .applicationNotFound:
+            return "Could not find running application"
+        case .invalidElement:
+            return "Invalid accessibility element"
+        }
     }
 }
 
