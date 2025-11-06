@@ -288,33 +288,48 @@ final class AccessibilityReader: ObservableObject {
         let roleKey = role ?? "(no role)"
         roleStats[roleKey, default: 0] += 1
 
-        // Debug: Log role and children count
+        // Get children WITHOUT pressing/expanding menus visually (preferred approach)
+        // This is the elegant approach: just read the accessibility tree structure
         var children: [AXUIElement] = []
 
-        // For menu bar items, we need to "press" them to force the menu to load
         if role == "AXMenuBarItem" {
-            // Perform AXPress action to open the menu (this forces lazy-loaded menus to populate)
-            AXUIElementPerformAction(element, kAXPressAction as CFString)
+            // HYBRID APPROACH: Try elegant method first, fallback to AXPress if needed
 
-            // Small delay to allow menu to populate
-            Thread.sleep(forTimeInterval: 0.05)
-
-            // Now get the menu children
+            // Step 1: Try to read children directly without AXPress (elegant, no visual expansion)
             let menuBarChildren = copyAXArray(element, kAXChildrenAttribute as CFString)
             if let firstChild = menuBarChildren.first {
-                // The first child should be the AXMenu
                 let menuRole: String? = copyAXString(firstChild, kAXRoleAttribute as CFString)
                 if menuRole == "AXMenu" {
-                    // Now get the children of the menu (these are the actual menu items)
+                    // Get the menu items from the AXMenu element
                     children = copyAXArray(firstChild, kAXChildrenAttribute as CFString)
-                    NSLog("   📋 Found AXMenu with \(children.count) menu items")
 
-                    // Cancel the menu press to close it (so we don't leave menus open)
-                    AXUIElementPerformAction(element, kAXCancelAction as CFString)
+                    // Step 2: If children is empty, some apps use lazy-loading and need AXPress
+                    if children.isEmpty {
+                        NSLog("   ⚠️ Menu appears lazy-loaded, using AXPress fallback for: \(title)")
+
+                        // Perform AXPress action to force menu population
+                        AXUIElementPerformAction(element, kAXPressAction as CFString)
+
+                        // Small delay to allow menu to populate
+                        Thread.sleep(forTimeInterval: 0.05)
+
+                        // Re-read children after press
+                        let menuBarChildrenAfterPress = copyAXArray(element, kAXChildrenAttribute as CFString)
+                        if let firstChildAfterPress = menuBarChildrenAfterPress.first {
+                            children = copyAXArray(firstChildAfterPress, kAXChildrenAttribute as CFString)
+
+                            // Cancel the menu press to close it
+                            AXUIElementPerformAction(element, kAXCancelAction as CFString)
+
+                            NSLog("   📋 Found \(children.count) menu items after AXPress fallback")
+                        }
+                    } else {
+                        NSLog("   📋 Found AXMenu with \(children.count) menu items (read-only, no visual expansion)")
+                    }
                 }
             }
         } else {
-            // For non-menu-bar-items, get children normally
+            // For all other elements, get children normally
             children = copyAXArray(element, kAXChildrenAttribute as CFString)
         }
 
@@ -331,19 +346,6 @@ final class AccessibilityReader: ObservableObject {
         let isMenuItem = role == "AXMenuItem"
         let hasShortcut = shortcut != nil && !shortcut!.isEmpty
         let shouldAddToResults = isMenuItem && hasShortcut
-
-        // Enhanced debug logging
-        NSLog("🔍 Processing Element:")
-        NSLog("   Title: \(title)")
-        NSLog("   Role: \(role ?? "nil")")
-        NSLog("   Children: \(children.count)")
-        NSLog("   Raw cmdChar: \(cmdChar ?? "nil")")
-        NSLog("   Raw modifiers: \(modifiers.map { String($0) } ?? "nil")")
-        NSLog("   Raw virtualKey: \(virtualKey.map { String($0) } ?? "nil")")
-        NSLog("   Parsed shortcut: \(shortcut ?? "nil")")
-        NSLog("   isMenuItem: \(isMenuItem)")
-        NSLog("   hasShortcut: \(hasShortcut)")
-        NSLog("   Will add to results: \(shouldAddToResults)")
 
         // Only create shortcut item for actual menu items with shortcuts
         if shouldAddToResults {
