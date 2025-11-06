@@ -1,0 +1,93 @@
+//
+//  PermissionsManager.swift
+//  easyshortcut
+//
+//  Manages Accessibility permissions checking and monitoring.
+//
+
+internal import Foundation
+internal import AppKit
+@preconcurrency import ApplicationServices
+internal import Combine
+
+@MainActor
+final class PermissionsManager: ObservableObject {
+    
+    // MARK: - Singleton
+    
+    static let shared = PermissionsManager()
+    
+    // MARK: - Published Properties
+    
+    /// Current permission status
+    @Published private(set) var isAccessibilityGranted: Bool = false
+    
+    /// Whether we're currently monitoring for permission changes
+    @Published private(set) var isMonitoring: Bool = false
+    
+    // MARK: - Private Properties
+    
+    private var monitoringTimer: Timer?
+    
+    // MARK: - Initialization
+    
+    private init() {
+        checkPermissions()
+    }
+    
+    deinit {
+        MainActor.assumeIsolated {
+            stopMonitoring()
+        }
+    }
+    
+    // MARK: - Permission Checking
+    
+    /// Check if Accessibility permissions are granted
+    @discardableResult
+    func checkPermissions() -> Bool {
+        let trusted = AXIsProcessTrusted()
+        isAccessibilityGranted = trusted
+        return trusted
+    }
+    
+    /// Request Accessibility permissions (opens System Settings)
+    nonisolated func requestPermissions() {
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
+        AXIsProcessTrustedWithOptions(options)
+        
+        Task { @MainActor in
+            checkPermissions()
+        }
+    }
+    
+    /// Open System Settings to Accessibility page
+    func openAccessibilitySettings() {
+        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
+        NSWorkspace.shared.open(url)
+    }
+    
+    // MARK: - Monitoring
+    
+    /// Start monitoring for permission changes
+    func startMonitoring() {
+        guard !isMonitoring else { return }
+        
+        isMonitoring = true
+        
+        // Poll every 0.5 seconds to detect when user grants permission
+        monitoringTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.checkPermissions()
+            }
+        }
+    }
+    
+    /// Stop monitoring for permission changes
+    func stopMonitoring() {
+        monitoringTimer?.invalidate()
+        monitoringTimer = nil
+        isMonitoring = false
+    }
+}
+
