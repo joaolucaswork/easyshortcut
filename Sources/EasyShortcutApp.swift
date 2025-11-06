@@ -44,6 +44,13 @@ struct EasyShortcutApp: App {
                     AccessibilityReader.shared.clearCache()
                 }
                 .keyboardShortcut("k", modifiers: [.command, .shift])
+
+                Divider()
+
+                Button("Quit") {
+                    NSApplication.shared.terminate(nil)
+                }
+                .keyboardShortcut("q", modifiers: [.command])
             }
         }
 
