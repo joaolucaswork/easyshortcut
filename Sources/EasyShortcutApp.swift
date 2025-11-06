@@ -21,6 +21,9 @@ struct EasyShortcutApp: App {
             CommandGroup(after: .appInfo) {
                 Color.clear
                     .onAppear {
+                        // Start monitoring active app changes
+                        AppWatcher.shared.startMonitoring()
+
                         // Check permissions on app launch
                         if !PermissionsManager.shared.checkPermissions() {
                             // Request permissions which will show system dialog

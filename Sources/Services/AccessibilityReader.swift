@@ -106,6 +106,8 @@ final class AccessibilityReader: ObservableObject {
     
     /// Manually trigger menu re-reading
     func refresh() {
+        // Reset the last read bundle ID to force a fresh read
+        lastReadBundleID = nil
         readMenusForActiveApp()
     }
     
@@ -120,6 +122,9 @@ final class AccessibilityReader: ObservableObject {
             print("⚠️ AccessibilityReader: Permission not granted")
             return
         }
+
+        // Clear error if permissions are granted
+        lastError = nil
 
         // Get active app
         guard let activeApp = AppWatcher.shared.activeAppInfo else {
@@ -160,15 +165,37 @@ final class AccessibilityReader: ObservableObject {
             let menuShortcuts = try await readMenusThrows(for: app)
             shortcuts = menuShortcuts
             lastError = nil
-            print("✅ AccessibilityReader: Successfully read \(menuShortcuts.count) shortcuts")
+
+            // Debug logging with NSLog to ensure visibility
+            let withShortcuts = menuShortcuts.filter { $0.hasShortcut }
+            NSLog("✅ AccessibilityReader: Successfully read \(menuShortcuts.count) menu items")
+            NSLog("   📊 Items with shortcuts: \(withShortcuts.count)")
+            NSLog("   📊 Items without shortcuts: \(menuShortcuts.count - withShortcuts.count)")
+
+            // Log first few shortcuts for debugging
+            if !withShortcuts.isEmpty {
+                NSLog("   🔍 Sample shortcuts:")
+                for item in withShortcuts.prefix(3) {
+                    NSLog("      - \(item.title): \(item.shortcut ?? "nil")")
+                }
+            } else {
+                NSLog("   ⚠️ NO SHORTCUTS FOUND WITH hasShortcut=true")
+                // Log first few items regardless
+                if !menuShortcuts.isEmpty {
+                    NSLog("   🔍 Sample menu items (all):")
+                    for item in menuShortcuts.prefix(5) {
+                        NSLog("      - \(item.title): shortcut=\(item.shortcut ?? "nil"), hasShortcut=\(item.hasShortcut)")
+                    }
+                }
+            }
         } catch let error as AccessibilityError {
             shortcuts = []
             lastError = error.localizedDescription
-            print("❌ AccessibilityReader: Error - \(error.localizedDescription)")
+            NSLog("❌ AccessibilityReader: Error - \(error.localizedDescription)")
         } catch {
             shortcuts = []
             lastError = "Unknown error: \(error.localizedDescription)"
-            print("❌ AccessibilityReader: Unknown error - \(error.localizedDescription)")
+            NSLog("❌ AccessibilityReader: Unknown error - \(error.localizedDescription)")
         }
     }
 
@@ -211,6 +238,13 @@ final class AccessibilityReader: ObservableObject {
         // Build current path
         let currentPath = menuPath + [title]
 
+        // Read role to determine element type
+        let role: String? = copyAXString(element, kAXRoleAttribute as CFString)
+
+        // Debug: Log role and children count
+        let children = copyAXArray(element, kAXChildrenAttribute as CFString)
+        NSLog("🔍 Element: \(title), Role: \(role ?? "nil"), Children count: \(children.count)")
+
         // Read shortcut information
         let cmdChar: String? = copyAXString(element, kAXMenuItemCmdCharAttribute as CFString)
         let modifiers: Int? = copyAXAttribute(element, kAXMenuItemCmdModifiersAttribute as CFString)
@@ -218,9 +252,6 @@ final class AccessibilityReader: ObservableObject {
 
         // Read enabled state
         let isEnabled: Bool = copyAXAttribute(element, kAXEnabledAttribute as CFString) ?? true
-
-        // Read role
-        let role: String? = copyAXString(element, kAXRoleAttribute as CFString)
 
         // Create shortcut item for this menu item
         let item = ShortcutItem(
@@ -233,9 +264,7 @@ final class AccessibilityReader: ObservableObject {
         )
         items.append(item)
 
-        // Check for children (submenu)
-        let children = copyAXArray(element, kAXChildrenAttribute as CFString)
-
+        // Recursively process children
         for child in children {
             let childItems = extractShortcuts(from: child, menuPath: currentPath)
             items.append(contentsOf: childItems)
