@@ -108,7 +108,7 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                List(filteredShortcuts, id: \.fullPath) { item in
+                List(filteredShortcuts) { item in
                     HStack(alignment: .top, spacing: 8) {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(item.title)

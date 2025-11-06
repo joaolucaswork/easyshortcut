@@ -2,58 +2,17 @@
 //  EasyShortcutApp.swift
 //  easyshortcut
 //
-//  Modern SwiftUI App structure using MenuBarExtra
+//  Modern SwiftUI App structure with AppKit-based menu bar
 //
 
 internal import SwiftUI
 
 @main
 struct EasyShortcutApp: App {
-    @Environment(\.openWindow) private var openWindow
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State private var showOnboarding = false
 
     var body: some Scene {
-        MenuBarExtra("easyshortcut", systemImage: "keyboard") {
-            ContentView()
-                .frame(width: 360, height: 500)
-        }
-        .menuBarExtraStyle(.window)
-        .commands {
-            CommandGroup(after: .appInfo) {
-                Color.clear
-                    .onAppear {
-                        // Start monitoring active app changes
-                        AppWatcher.shared.startMonitoring()
-
-                        // Check permissions on app launch
-                        if !PermissionsManager.shared.checkPermissions() {
-                            // Request permissions which will show system dialog
-                            PermissionsManager.shared.requestPermissions()
-                            // Open onboarding window
-                            openWindow(id: "onboarding")
-                        }
-                    }
-
-                Divider()
-
-                Button("Refresh Current App") {
-                    AccessibilityReader.shared.refresh()
-                }
-                .keyboardShortcut("r", modifiers: [.command])
-
-                Button("Clear All Cache") {
-                    AccessibilityReader.shared.clearCache()
-                }
-                .keyboardShortcut("k", modifiers: [.command, .shift])
-
-                Divider()
-
-                Button("Quit") {
-                    NSApplication.shared.terminate(nil)
-                }
-                .keyboardShortcut("q", modifiers: [.command])
-            }
-        }
-
         // Onboarding window
         Window("Setup", id: "onboarding") {
             OnboardingView {
@@ -65,6 +24,50 @@ struct EasyShortcutApp: App {
         .defaultSize(width: 500, height: 450)
         .windowStyle(.hiddenTitleBar)
         .defaultPosition(.center)
+    }
+}
+
+// AppDelegate to setup the status bar with AppKit
+@MainActor
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    private var onboardingWindow: NSWindow?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Setup status bar controller
+        StatusBarController.shared.setupStatusBar()
+
+        // Start monitoring active app changes
+        AppWatcher.shared.startMonitoring()
+
+        // Check permissions on app launch
+        if !PermissionsManager.shared.checkPermissions() {
+            // Request permissions which will show system dialog
+            PermissionsManager.shared.requestPermissions()
+
+            // Create and show onboarding window
+            showOnboardingWindow()
+        }
+    }
+
+    private func showOnboardingWindow() {
+        let onboardingView = OnboardingView {
+            // Close onboarding when complete
+            self.onboardingWindow?.close()
+            self.onboardingWindow = nil
+        }
+
+        let hostingController = NSHostingController(rootView: onboardingView)
+
+        let window = NSWindow(contentViewController: hostingController)
+        window.title = "Setup"
+        window.styleMask = [.titled, .closable, .fullSizeContentView]
+        window.titlebarAppearsTransparent = true
+        window.titleVisibility = .hidden
+        window.setContentSize(NSSize(width: 500, height: 450))
+        window.center()
+        window.makeKeyAndOrderFront(nil)
+
+        self.onboardingWindow = window
     }
 }
 
