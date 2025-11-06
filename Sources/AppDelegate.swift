@@ -11,6 +11,7 @@ import Cocoa
 import SwiftUI
 
 @main
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var statusBarController: StatusBarController?

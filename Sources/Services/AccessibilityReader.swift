@@ -1,6 +1,6 @@
 import Foundation
 import AppKit
-import ApplicationServices
+@preconcurrency import ApplicationServices
 import Combine
 
 /// Authorization status for Accessibility API access
@@ -47,8 +47,12 @@ final class AccessibilityReader: ObservableObject {
     }
     
     deinit {
-        appWatcherCancellable?.cancel()
-        appWatcherCancellable = nil
+        // Note: deinit is already isolated to MainActor since the class is @MainActor
+        // We need to use assumeIsolated to safely access MainActor-isolated properties
+        MainActor.assumeIsolated {
+            appWatcherCancellable?.cancel()
+            appWatcherCancellable = nil
+        }
     }
     
     // MARK: - Setup
@@ -73,10 +77,15 @@ final class AccessibilityReader: ObservableObject {
     }
     
     /// Request accessibility permission from the user
-    func requestAccessibilityPermission() {
+    nonisolated func requestAccessibilityPermission() {
+        // Access the C API constant in a nonisolated context
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
-        checkAuthorizationStatus()
+
+        // Update status on MainActor
+        Task { @MainActor in
+            checkAuthorizationStatus()
+        }
     }
     
     // MARK: - Public Methods
@@ -109,9 +118,10 @@ final class AccessibilityReader: ObservableObject {
         }
         
         lastReadBundleID = activeApp.bundleID
-        
+
         // Get running application
-        guard let runningApp = NSRunningApplication.runningApplications(withBundleIdentifier: activeApp.bundleID).first else {
+        guard let bundleID = activeApp.bundleID,
+              let runningApp = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first else {
             shortcuts = []
             lastError = "Could not find running application"
             return

@@ -15,6 +15,7 @@
 import Cocoa
 import SwiftUI
 
+@MainActor
 class StatusBarController {
 
     // The menu bar item that appears in the system status bar
@@ -32,21 +33,21 @@ class StatusBarController {
             fatalError("Failed to create status item button")
         }
 
-        // Configure the status item button
-        button.image = NSImage(named: "StatusIcon")
-        button.image?.isTemplate = true  // Allows automatic light/dark mode adaptation
-        button.action = #selector(togglePopover(_:))
-        button.target = self
-
         // Initialize NSPopover with local variable
         let popoverLocal = NSPopover()
         popoverLocal.contentSize = NSSize(width: 360, height: 500)
         popoverLocal.behavior = .transient  // Auto-closes when clicking outside
         popoverLocal.contentViewController = NSHostingController(rootView: ContentView())
 
-        // Assign to non-optional properties after successful initialization
+        // Assign to non-optional properties first before configuring button.target
         self.statusItem = statusItemLocal
         self.popover = popoverLocal
+
+        // Configure the status item button (after self is fully initialized)
+        button.image = NSImage(named: "StatusIcon")
+        button.image?.isTemplate = true  // Allows automatic light/dark mode adaptation
+        button.action = #selector(togglePopover(_:))
+        button.target = self
     }
 
     @objc func togglePopover(_ sender: AnyObject?) {
@@ -67,7 +68,11 @@ class StatusBarController {
     }
 
     deinit {
-        NSStatusBar.system.removeStatusItem(statusItem)
+        // Note: deinit is already isolated to MainActor since the class is @MainActor
+        // We need to use assumeIsolated to safely access MainActor-isolated properties
+        MainActor.assumeIsolated {
+            NSStatusBar.system.removeStatusItem(statusItem)
+        }
     }
 }
 

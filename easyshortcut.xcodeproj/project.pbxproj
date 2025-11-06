@@ -10,6 +10,10 @@
 		A1000001000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000001 /* AppDelegate.swift */; };
 		A1000002000000000000001 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000000000000001 /* StatusBarController.swift */; };
 		A1000003000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* Assets.xcassets */; };
+		A1000010000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ContentView.swift */; };
+		A1000011000000000000001 /* ShortcutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* ShortcutItem.swift */; };
+		A1000012000000000000001 /* AccessibilityReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012000000000000001 /* AccessibilityReader.swift */; };
+		A1000013000000000000001 /* AppWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013000000000000001 /* AppWatcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		A2000003000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2000004000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000005000000000000001 /* easyshortcut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = easyshortcut.entitlements; sourceTree = "<group>"; };
+		A2000010000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A2000011000000000000001 /* ShortcutItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutItem.swift; sourceTree = "<group>"; };
+		A2000012000000000000001 /* AccessibilityReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityReader.swift; sourceTree = "<group>"; };
+		A2000013000000000000001 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +74,7 @@
 		A5000004000000000000001 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A2000010000000000000001 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -73,6 +82,7 @@
 		A5000005000000000000001 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A2000011000000000000001 /* ShortcutItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -80,6 +90,8 @@
 		A5000006000000000000001 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A2000012000000000000001 /* AccessibilityReader.swift */,
+				A2000013000000000000001 /* AppWatcher.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -155,6 +167,10 @@
 			files = (
 				A1000001000000000000001 /* AppDelegate.swift in Sources */,
 				A1000002000000000000001 /* StatusBarController.swift in Sources */,
+				A1000010000000000000001 /* ContentView.swift in Sources */,
+				A1000011000000000000001 /* ShortcutItem.swift in Sources */,
+				A1000012000000000000001 /* AccessibilityReader.swift in Sources */,
+				A1000013000000000000001 /* AppWatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +319,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.easyshortcut.easyshortcut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
+				SWIFT_UPCOMING_FEATURE_BARE_SLASH_REGEX = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -331,6 +352,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.easyshortcut.easyshortcut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
+				SWIFT_UPCOMING_FEATURE_BARE_SLASH_REGEX = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

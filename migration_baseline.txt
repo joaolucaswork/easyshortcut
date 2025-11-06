@@ -1,0 +1,10 @@
+Xcode 26.1
+Build version 17B55
+Apple Swift version 6.2.1 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
+Target: arm64-apple-macosx15.0
+
+Recent Git Commits:
+d472c7f Add Swift 6 migration guide
+9c844d9 Add status bar UI and shortcut extraction services
+f95ff84 Initial project setup for easyshortcut app
+8f02f1a Initial commit
