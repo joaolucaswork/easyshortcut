@@ -257,12 +257,40 @@ final class AccessibilityReader: ObservableObject {
         roleStats[roleKey, default: 0] += 1
 
         // Debug: Log role and children count
-        let children = copyAXArray(element, kAXChildrenAttribute as CFString)
+        var children: [AXUIElement] = []
+
+        // For menu bar items, we need to "press" them to force the menu to load
+        if role == "AXMenuBarItem" {
+            // Perform AXPress action to open the menu (this forces lazy-loaded menus to populate)
+            AXUIElementPerformAction(element, kAXPressAction as CFString)
+
+            // Small delay to allow menu to populate
+            Thread.sleep(forTimeInterval: 0.05)
+
+            // Now get the menu children
+            let menuBarChildren = copyAXArray(element, kAXChildrenAttribute as CFString)
+            if let firstChild = menuBarChildren.first {
+                // The first child should be the AXMenu
+                let menuRole: String? = copyAXString(firstChild, kAXRoleAttribute as CFString)
+                if menuRole == "AXMenu" {
+                    // Now get the children of the menu (these are the actual menu items)
+                    children = copyAXArray(firstChild, kAXChildrenAttribute as CFString)
+                    NSLog("   📋 Found AXMenu with \(children.count) menu items")
+
+                    // Cancel the menu press to close it (so we don't leave menus open)
+                    AXUIElementPerformAction(element, kAXCancelAction as CFString)
+                }
+            }
+        } else {
+            // For non-menu-bar-items, get children normally
+            children = copyAXArray(element, kAXChildrenAttribute as CFString)
+        }
 
         // Read shortcut information
         let cmdChar: String? = copyAXString(element, kAXMenuItemCmdCharAttribute as CFString)
         let modifiers: Int? = copyAXAttribute(element, kAXMenuItemCmdModifiersAttribute as CFString)
-        let shortcut = parseShortcut(cmdChar: cmdChar, modifiers: modifiers)
+        let virtualKey: Int? = copyAXAttribute(element, kAXMenuItemCmdVirtualKeyAttribute as CFString)
+        let shortcut = parseShortcut(cmdChar: cmdChar, modifiers: modifiers, virtualKey: virtualKey)
 
         // Read enabled state
         let isEnabled: Bool = copyAXAttribute(element, kAXEnabledAttribute as CFString) ?? true
@@ -279,6 +307,7 @@ final class AccessibilityReader: ObservableObject {
         NSLog("   Children: \(children.count)")
         NSLog("   Raw cmdChar: \(cmdChar ?? "nil")")
         NSLog("   Raw modifiers: \(modifiers.map { String($0) } ?? "nil")")
+        NSLog("   Raw virtualKey: \(virtualKey.map { String($0) } ?? "nil")")
         NSLog("   Parsed shortcut: \(shortcut ?? "nil")")
         NSLog("   isMenuItem: \(isMenuItem)")
         NSLog("   hasShortcut: \(hasShortcut)")
@@ -308,11 +337,27 @@ final class AccessibilityReader: ObservableObject {
 
     // MARK: - Shortcut Parsing
 
-    private func parseShortcut(cmdChar: String?, modifiers: Int?) -> String? {
-        guard let cmdChar = cmdChar, !cmdChar.isEmpty else {
-            return nil
+    private func parseShortcut(cmdChar: String?, modifiers: Int?, virtualKey: Int?) -> String? {
+        // Try character-based shortcut first
+        if let cmdChar = cmdChar, !cmdChar.isEmpty {
+            let modifierString = formatModifiers(modifiers)
+            let key = cmdChar.uppercased()
+            return modifierString + key
         }
 
+        // Fall back to virtual key-based shortcut
+        if let virtualKey = virtualKey {
+            if let keyString = mapVirtualKeyToString(virtualKey) {
+                let modifierString = formatModifiers(modifiers)
+                return modifierString + keyString
+            }
+        }
+
+        // No valid shortcut found
+        return nil
+    }
+
+    private func formatModifiers(_ modifiers: Int?) -> String {
         var modifierString = ""
         let modifierValue = modifiers ?? 0
 
@@ -337,10 +382,58 @@ final class AccessibilityReader: ObservableObject {
             modifierString += "⇧"
         }
 
-        // Uppercase the key character for consistency
-        let key = cmdChar.uppercased()
+        return modifierString
+    }
 
-        return modifierString + key
+    private func mapVirtualKeyToString(_ virtualKey: Int) -> String? {
+        switch virtualKey {
+        // Function Keys F1-F12
+        case 122: return "F1"
+        case 120: return "F2"
+        case 99: return "F3"
+        case 118: return "F4"
+        case 96: return "F5"
+        case 97: return "F6"
+        case 98: return "F7"
+        case 100: return "F8"
+        case 101: return "F9"
+        case 109: return "F10"
+        case 103: return "F11"
+        case 111: return "F12"
+
+        // Function Keys F13-F20
+        case 105: return "F13"
+        case 107: return "F14"
+        case 113: return "F15"
+        case 106: return "F16"
+        case 64: return "F17"
+        case 79: return "F18"
+        case 80: return "F19"
+        case 90: return "F20"
+
+        // Arrow Keys
+        case 126: return "↑"
+        case 125: return "↓"
+        case 123: return "←"
+        case 124: return "→"
+
+        // Special Keys
+        case 51: return "⌫"      // Delete/Backspace
+        case 117: return "⌦"     // Forward Delete
+        case 53: return "⎋"      // Escape
+        case 36: return "↩"      // Return
+        case 76: return "⌅"      // Enter
+        case 48: return "⇥"      // Tab
+        case 49: return "Space"
+        case 115: return "↖"     // Home
+        case 119: return "↘"     // End
+        case 116: return "⇞"     // Page Up
+        case 121: return "⇟"     // Page Down
+        case 71: return "⌧"      // Clear
+        case 114: return "?⃝"    // Help
+
+        default: return nil
+        }
     }
 
     // MARK: - AX Attribute Helpers
