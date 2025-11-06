@@ -39,6 +39,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Start monitoring active app changes
         AppWatcher.shared.startMonitoring()
 
+        // Start monitoring recent apps
+        RecentAppsManager.shared.startMonitoring()
+
         // Check permissions on app launch
         if !PermissionsManager.shared.checkPermissions() {
             // Request permissions which will show system dialog

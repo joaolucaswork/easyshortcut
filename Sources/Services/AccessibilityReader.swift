@@ -124,7 +124,31 @@ final class AccessibilityReader: ObservableObject {
         MenuCacheManager.shared.clearAllCache()
         NSLog("🗑️ AccessibilityReader: Cleared all cache")
     }
-    
+
+    /// Read menus for a specific app (not necessarily the active one)
+    /// This is used for the Recent Apps feature
+    func readMenusForSpecificApp(_ app: NSRunningApplication) async {
+        // Check authorization
+        checkAuthorizationStatus()
+        guard authorizationStatus == .authorized else {
+            shortcuts = []
+            lastError = "Accessibility permission not granted"
+            print("⚠️ AccessibilityReader: Permission not granted")
+            return
+        }
+
+        // Clear error if permissions are granted
+        lastError = nil
+
+        // Update the last read bundle ID to this app
+        lastReadBundleID = app.bundleIdentifier
+
+        print("📱 AccessibilityReader: Reading menus for specific app: \(app.localizedName ?? "Unknown") (\(app.bundleIdentifier ?? "no bundle ID"))")
+
+        // Read menus
+        await readMenus(for: app)
+    }
+
     // MARK: - Menu Reading
     
     private func readMenusForActiveApp() {
