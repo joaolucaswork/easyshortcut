@@ -49,6 +49,13 @@ final class PermissionsManager {
     func checkPermissions() -> Bool {
         let trusted = AXIsProcessTrusted()
         isAccessibilityGranted = trusted
+
+        if trusted {
+            print("✅ PermissionsManager: Accessibility permissions granted")
+        } else {
+            print("⚠️ PermissionsManager: Accessibility permissions NOT granted")
+        }
+
         return trusted
     }
     

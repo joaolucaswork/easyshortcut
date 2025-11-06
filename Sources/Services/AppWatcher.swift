@@ -142,9 +142,11 @@ final class AppWatcher: ObservableObject {
     /// Captures the currently active application on initialization
     private func captureCurrentActiveApp() {
         guard let app = NSWorkspace.shared.frontmostApplication else {
+            print("⚠️ AppWatcher: No frontmost application found")
             return
         }
-        
+
+        print("📱 AppWatcher: Captured initial app: \(app.localizedName ?? "Unknown")")
         updateActiveApp(app)
     }
     
@@ -158,9 +160,12 @@ final class AppWatcher: ObservableObject {
             let sameProcessID = app.processIdentifier == currentApp.processIdentifier
 
             if sameBundleID || sameProcessID {
+                print("ℹ️ AppWatcher: Skipping update for same app: \(app.localizedName ?? "Unknown")")
                 return
             }
         }
+
+        print("🔄 AppWatcher: Updating active app to: \(app.localizedName ?? "Unknown") (\(app.bundleIdentifier ?? "no bundle ID"))")
 
         // Update the single source of truth - this is the only property that should be updated directly
         activeAppInfo = ActiveAppInfo(

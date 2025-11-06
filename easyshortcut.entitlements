@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<!-- CRITICAL: App Sandbox MUST be disabled for Accessibility API to work -->
+	<!-- The Accessibility API requires access to other applications' UI elements -->
+	<!-- which is not permitted under the App Sandbox restrictions -->
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
+
+	<!-- Hardened Runtime: Enable for security and notarization -->
+	<!-- This provides security benefits without blocking Accessibility API -->
+	<key>com.apple.security.cs.allow-jit</key>
+	<false/>
+	<key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+	<false/>
+	<key>com.apple.security.cs.allow-dyld-environment-variables</key>
+	<false/>
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<false/>
+	<key>com.apple.security.cs.disable-executable-page-protection</key>
+	<false/>
+</dict>
 </plist>

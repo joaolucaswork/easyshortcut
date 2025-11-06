@@ -64,7 +64,7 @@ final class AccessibilityReader: ObservableObject {
     }
     
     // MARK: - Setup
-    
+
     private func setupAppWatcher() {
         appWatcherCancellable = AppWatcher.shared.$activeAppInfo
             .sink { [weak self] _ in
@@ -72,6 +72,12 @@ final class AccessibilityReader: ObservableObject {
                     self?.readMenusForActiveApp()
                 }
             }
+
+        // CRITICAL FIX: Manually trigger initial read
+        // Combine's sink only receives NEW values, not the current value
+        // Since AppWatcher may have already set activeAppInfo before we subscribed,
+        // we need to manually trigger the initial read
+        readMenusForActiveApp()
     }
     
     // MARK: - Permission Management
@@ -111,30 +117,35 @@ final class AccessibilityReader: ObservableObject {
         guard authorizationStatus == .authorized else {
             shortcuts = []
             lastError = "Accessibility permission not granted"
+            print("⚠️ AccessibilityReader: Permission not granted")
             return
         }
-        
+
         // Get active app
         guard let activeApp = AppWatcher.shared.activeAppInfo else {
             shortcuts = []
+            print("⚠️ AccessibilityReader: No active app info available")
             return
         }
-        
+
         // Optimization: skip if same app
         if lastReadBundleID == activeApp.bundleID {
+            print("ℹ️ AccessibilityReader: Skipping read for same app: \(activeApp.name ?? "Unknown")")
             return
         }
-        
+
         lastReadBundleID = activeApp.bundleID
+        print("📱 AccessibilityReader: Reading menus for app: \(activeApp.name ?? "Unknown") (\(activeApp.bundleID ?? "no bundle ID"))")
 
         // Get running application
         guard let bundleID = activeApp.bundleID,
               let runningApp = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first else {
             shortcuts = []
             lastError = "Could not find running application"
+            print("⚠️ AccessibilityReader: Could not find running application for bundle ID: \(activeApp.bundleID ?? "nil")")
             return
         }
-        
+
         // Read menus
         Task {
             await readMenus(for: runningApp)
@@ -149,12 +160,15 @@ final class AccessibilityReader: ObservableObject {
             let menuShortcuts = try await readMenusThrows(for: app)
             shortcuts = menuShortcuts
             lastError = nil
+            print("✅ AccessibilityReader: Successfully read \(menuShortcuts.count) shortcuts")
         } catch let error as AccessibilityError {
             shortcuts = []
             lastError = error.localizedDescription
+            print("❌ AccessibilityReader: Error - \(error.localizedDescription)")
         } catch {
             shortcuts = []
             lastError = "Unknown error: \(error.localizedDescription)"
+            print("❌ AccessibilityReader: Unknown error - \(error.localizedDescription)")
         }
     }
 

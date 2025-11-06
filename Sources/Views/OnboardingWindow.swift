@@ -10,7 +10,8 @@ internal import AppKit
 
 /// SwiftUI view for the onboarding content
 struct OnboardingView: View {
-    @State var permissionsManager = PermissionsManager.shared
+    @Bindable var permissionsManager = PermissionsManager.shared
+    @State private var showingSuccess = false
     let onComplete: () -> Void
     
     var body: some View {
@@ -43,11 +44,14 @@ struct OnboardingView: View {
                 Image(systemName: permissionsManager.isAccessibilityGranted ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
                     .foregroundColor(permissionsManager.isAccessibilityGranted ? .green : .orange)
                     .font(.system(size: 16))
-                
-                Text(permissionsManager.isAccessibilityGranted ? "Accessibility permissions granted" : "Accessibility permissions required")
+                    .symbolEffect(.bounce, value: permissionsManager.isAccessibilityGranted)
+
+                Text(permissionsManager.isAccessibilityGranted ? "Accessibility permissions granted ✓" : "Accessibility permissions required")
                     .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(permissionsManager.isAccessibilityGranted ? .green : .primary)
             }
             .padding(.vertical, 8)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: permissionsManager.isAccessibilityGranted)
             
             // Action Button
             if !permissionsManager.isAccessibilityGranted {
@@ -91,11 +95,26 @@ struct OnboardingView: View {
         .frame(width: 500, height: 450)
         .onChange(of: permissionsManager.isAccessibilityGranted) { _, isGranted in
             if isGranted {
+                print("✅ OnboardingView: Accessibility permission detected! Auto-closing in 1 second...")
+                showingSuccess = true
+
                 // Auto-close after a short delay when permission is granted
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    permissionsManager.stopMonitoring()
                     onComplete()
                 }
             }
+        }
+        .onAppear {
+            // Start monitoring when view appears
+            if !permissionsManager.isAccessibilityGranted {
+                print("ℹ️ OnboardingView: Starting permission monitoring...")
+                permissionsManager.startMonitoring()
+            }
+        }
+        .onDisappear {
+            // Stop monitoring when view disappears
+            permissionsManager.stopMonitoring()
         }
     }
 }
