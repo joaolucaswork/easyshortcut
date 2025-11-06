@@ -1,13 +1,21 @@
-import Foundation
-import AppKit
+internal import Foundation
+internal import AppKit
 @preconcurrency import ApplicationServices
-import Combine
+internal import Combine
 
 /// Authorization status for Accessibility API access
-enum AccessibilityAuthorizationStatus {
+enum AccessibilityAuthorizationStatus: Sendable {
     case notDetermined
     case denied
     case authorized
+}
+
+/// Errors that can occur during accessibility operations
+enum AccessibilityError: Error, Sendable {
+    case permissionDenied
+    case menuBarNotAccessible
+    case applicationNotFound
+    case invalidElement
 }
 
 /// Service class that reads menu structures and keyboard shortcuts from the active application using macOS Accessibility APIs
@@ -137,14 +145,27 @@ final class AccessibilityReader: ObservableObject {
         isReading = true
         defer { isReading = false }
 
+        do {
+            let menuShortcuts = try await readMenusThrows(for: app)
+            shortcuts = menuShortcuts
+            lastError = nil
+        } catch let error as AccessibilityError {
+            shortcuts = []
+            lastError = error.localizedDescription
+        } catch {
+            shortcuts = []
+            lastError = "Unknown error: \(error.localizedDescription)"
+        }
+    }
+
+    /// Reads menu shortcuts with typed throws for better error handling
+    private func readMenusThrows(for app: NSRunningApplication) async throws(AccessibilityError) -> [ShortcutItem] {
         let pid = app.processIdentifier
         let appElement = AXUIElementCreateApplication(pid)
 
         // Get menu bar
         guard let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) else {
-            shortcuts = []
-            lastError = "Could not access menu bar"
-            return
+            throw .menuBarNotAccessible
         }
 
         // Get menu bar children (top-level menus)
@@ -158,8 +179,7 @@ final class AccessibilityReader: ObservableObject {
             allShortcuts.append(contentsOf: menuShortcuts)
         }
 
-        shortcuts = allShortcuts
-        lastError = nil
+        return allShortcuts
     }
 
     // MARK: - Recursive Menu Traversal
@@ -273,6 +293,23 @@ final class AccessibilityReader: ObservableObject {
         }
 
         return array as? [AXUIElement] ?? []
+    }
+}
+
+// MARK: - AccessibilityError Extension
+
+extension AccessibilityError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .permissionDenied:
+            return "Accessibility permission not granted"
+        case .menuBarNotAccessible:
+            return "Could not access menu bar"
+        case .applicationNotFound:
+            return "Could not find running application"
+        case .invalidElement:
+            return "Invalid accessibility element"
+        }
     }
 }
 

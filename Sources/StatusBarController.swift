@@ -12,8 +12,8 @@
 //  - Showing/hiding the popover window
 //
 
-import Cocoa
-import SwiftUI
+internal import Cocoa
+internal import SwiftUI
 
 @MainActor
 class StatusBarController {

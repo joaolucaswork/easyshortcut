@@ -1,7 +1,7 @@
-import Foundation
+internal import Foundation
 
 /// Represents a keyboard shortcut extracted from an application's menu structure.
-struct ShortcutItem: Identifiable, Equatable, Hashable {
+struct ShortcutItem: Identifiable, Equatable, Hashable, Sendable {
     /// Unique identifier for SwiftUI List iteration
     let id: UUID = UUID()
     

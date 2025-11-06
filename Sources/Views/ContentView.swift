@@ -6,7 +6,7 @@
 //  Contains the search field and shortcuts list.
 //
 
-import SwiftUI
+internal import SwiftUI
 
 struct ContentView: View {
     @State private var searchQuery = ""

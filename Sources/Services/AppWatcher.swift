@@ -6,12 +6,12 @@
 //  Exposes active app information through Combine @Published properties for reactive updates.
 //
 
-import Foundation
-import AppKit
-import Combine
+internal import Foundation
+internal import AppKit
+internal import Combine
 
 /// Represents the currently active application with all relevant information
-struct ActiveAppInfo {
+struct ActiveAppInfo: Sendable {
     /// The human-readable name of the active application
     let name: String?
 
