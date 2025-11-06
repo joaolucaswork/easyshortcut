@@ -31,24 +31,35 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Active app header
-            if let appName = appWatcher.activeAppInfo?.name {
-                Text(appName)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 12)
-                    .padding(.bottom, 4)
-            } else {
-                Text("No Active App")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 12)
-                    .padding(.bottom, 4)
+            HStack(spacing: 8) {
+                // App icon
+                if let app = appWatcher.activeAppInfo?.app,
+                   let icon = app.icon {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+
+                if let appName = appWatcher.activeAppInfo?.name {
+                    Text(appName)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                } else {
+                    Text("No Active App")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+            .padding(.bottom, 12)
+
+            // Divider
+            Divider()
 
             // Search field
             HStack {
@@ -58,10 +69,10 @@ struct ContentView: View {
                     .textFieldStyle(.plain)
             }
             .padding(8)
-            .background(Color(NSColor.controlBackgroundColor))
+            .background(.thinMaterial)
             .cornerRadius(6)
             .padding(.horizontal, 12)
-            .padding(.top, 4)
+            .padding(.top, 8)
             .padding(.bottom, 8)
 
             // Error state
@@ -115,14 +126,17 @@ struct ContentView: View {
                                 .foregroundColor(item.isEnabled ? .primary : .secondary)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(Color(NSColor.controlBackgroundColor))
+                                .background(.ultraThinMaterial)
                                 .cornerRadius(4)
                         }
                     }
                     .padding(.vertical, 4)
                     .opacity(item.isEnabled ? 1.0 : 0.6)
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(Color.primary.opacity(0.1))
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
         }
         .padding(12)

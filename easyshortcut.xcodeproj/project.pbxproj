@@ -113,6 +113,20 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>A1000017000000000000001</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A2000017000000000000001</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>A1000018000000000000001</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A2000018000000000000001</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>A2000003000000000000001</key>
 		<dict>
 			<key>isa</key>
@@ -223,6 +237,28 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>A2000017000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>CachedMenuData.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A2000018000000000000001</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>MenuCacheManager.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>A3000001000000000000001</key>
 		<dict>
 			<key>explicitFileType</key>
@@ -310,6 +346,7 @@
 			<key>children</key>
 			<array>
 				<string>A2000011000000000000001</string>
+				<string>A2000017000000000000001</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -325,6 +362,7 @@
 				<string>A2000012000000000000001</string>
 				<string>A2000013000000000000001</string>
 				<string>A2000014000000000000001</string>
+				<string>A2000018000000000000001</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -774,6 +812,8 @@
 				<string>A1000013000000000000001</string>
 				<string>A1000014000000000000001</string>
 				<string>A1000015000000000000001</string>
+				<string>A1000017000000000000001</string>
+				<string>A1000018000000000000001</string>
 			</array>
 			<key>isa</key>
 			<string>PBXSourcesBuildPhase</string>

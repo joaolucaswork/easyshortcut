@@ -32,6 +32,25 @@ struct EasyShortcutApp: App {
                             openWindow(id: "onboarding")
                         }
                     }
+
+                Divider()
+
+                Button("Refresh Current App") {
+                    AccessibilityReader.shared.refresh()
+                }
+                .keyboardShortcut("r", modifiers: [.command])
+
+                Button("Clear All Cache") {
+                    AccessibilityReader.shared.clearCache()
+                }
+                .keyboardShortcut("k", modifiers: [.command, .shift])
+
+                Divider()
+
+                Button("Quit") {
+                    NSApplication.shared.terminate(nil)
+                }
+                .keyboardShortcut("q", modifiers: [.command])
             }
         }
 

@@ -38,7 +38,10 @@ final class AccessibilityReader: ObservableObject {
     
     /// Optional error message for debugging/display
     @Published private(set) var lastError: String?
-    
+
+    /// Indicates if the current shortcuts are from cache
+    @Published private(set) var isUsingCache: Bool = false
+
     // MARK: - Private Properties
     
     /// Store Combine subscription to AppWatcher
@@ -104,11 +107,22 @@ final class AccessibilityReader: ObservableObject {
     
     // MARK: - Public Methods
     
-    /// Manually trigger menu re-reading
+    /// Manually trigger menu re-reading (bypasses cache)
     func refresh() {
+        // Invalidate cache for current app
+        if let bundleID = AppWatcher.shared.activeAppInfo?.bundleID {
+            MenuCacheManager.shared.invalidateCache(for: bundleID)
+        }
+
         // Reset the last read bundle ID to force a fresh read
         lastReadBundleID = nil
         readMenusForActiveApp()
+    }
+
+    /// Clear all cached menu data
+    func clearCache() {
+        MenuCacheManager.shared.clearAllCache()
+        NSLog("🗑️ AccessibilityReader: Cleared all cache")
     }
     
     // MARK: - Menu Reading
@@ -161,10 +175,28 @@ final class AccessibilityReader: ObservableObject {
         isReading = true
         defer { isReading = false }
 
+        // CACHE CHECK: Try to get cached shortcuts first
+        if let cachedShortcuts = MenuCacheManager.shared.getCachedShortcuts(for: app) {
+            shortcuts = cachedShortcuts
+            lastError = nil
+            isUsingCache = true
+
+            let withShortcuts = cachedShortcuts.filter { $0.hasShortcut }
+            NSLog("🚀 AccessibilityReader: Using CACHED shortcuts (\(cachedShortcuts.count) items, \(withShortcuts.count) with shortcuts)")
+            return
+        }
+
+        // CACHE MISS: Perform full menu scan
+        isUsingCache = false
+        NSLog("🔍 AccessibilityReader: Cache miss - performing full menu scan")
+
         do {
             let menuShortcuts = try await readMenusThrows(for: app)
             shortcuts = menuShortcuts
             lastError = nil
+
+            // CACHE STORE: Save the scanned shortcuts
+            MenuCacheManager.shared.cacheShortcuts(menuShortcuts, for: app)
 
             // Debug logging with NSLog to ensure visibility
             let withShortcuts = menuShortcuts.filter { $0.hasShortcut }

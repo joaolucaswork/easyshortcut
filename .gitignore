@@ -84,4 +84,6 @@ iOSInjectionProject/
 *.swp
 *.swo
 *~
-
+.augment/
+.repomix/
+repomix-output.xml
