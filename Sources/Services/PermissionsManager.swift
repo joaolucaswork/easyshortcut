@@ -48,7 +48,21 @@ final class PermissionsManager {
     @discardableResult
     func checkPermissions() -> Bool {
         let trusted = AXIsProcessTrusted()
+        let wasGranted = isAccessibilityGranted
         isAccessibilityGranted = trusted
+
+        if trusted {
+            print("✅ PermissionsManager: Accessibility permissions granted")
+
+            // If permissions just became granted, trigger a refresh
+            if !wasGranted {
+                print("🔄 PermissionsManager: Permissions newly granted, triggering AccessibilityReader refresh")
+                AccessibilityReader.shared.refresh()
+            }
+        } else {
+            print("⚠️ PermissionsManager: Accessibility permissions NOT granted")
+        }
+
         return trusted
     }
     

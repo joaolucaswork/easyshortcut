@@ -1,0 +1,424 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project easyshortcut.xcodeproj -scheme easyshortcut -configuration Debug clean build
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00008132-001664DA2EC1801C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00008132-001664DA2EC1801C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00008132-001664DA2EC1801C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00008132-001664DA2EC1801C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'easyshortcut' in project 'easyshortcut' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: c4c851ab66fa6d5760d958ebee23a6c9
+Build description path: /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/XCBuildData/c4c851ab66fa6d5760d958ebee23a6c9.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk /Users/lucas/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.1-25B74-3ae1261907bdadc328169391a47051a6.sdkstatcache
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -o /Users/lucas/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.1-25B74-3ae1261907bdadc328169391a47051a6.sdkstatcache
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/EagerLinkingTBDs/Debug
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut-d7f7fc869017b6b3cbc5a75dbfdea63d-VFS/all-product-headers.yaml
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut-d7f7fc869017b6b3cbc5a75dbfdea63d-VFS/all-product-headers.yaml
+
+CreateBuildDirectory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug
+    cd /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.xcodeproj
+    builtin-create-build-directory /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-own-target-headers.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibPath-normal-arm64.txt (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibPath-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-generated-files.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-generated-files.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-non-framework-target-headers.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyStaticMetadataFileList (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyMetadataFileList (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-target-headers.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-project-headers.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-project-headers.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.hmap (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.hmap
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibInstallName-normal-arm64.txt (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibInstallName-normal-arm64.txt
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_const_extract_protocols.json (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-OutputFileMap.json (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.LinkFileList (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.LinkFileList
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftConstValuesFileList (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/Entitlements.plist (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    write-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/Entitlements.plist
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app
+
+ProcessProductPackaging /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.entitlements /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+    Entitlements:
+    
+    {
+    "com.apple.security.app-sandbox" = 0;
+    "com.apple.security.automation.apple-events" = 1;
+    "com.apple.security.cs.allow-dyld-environment-variables" = 0;
+    "com.apple.security.cs.allow-jit" = 0;
+    "com.apple.security.cs.allow-unsigned-executable-memory" = 0;
+    "com.apple.security.cs.disable-executable-page-protection" = 0;
+    "com.apple.security.cs.disable-library-validation" = 0;
+    "com.apple.security.get-task-allow" = 1;
+}
+    
+    builtin-productPackagingUtility /Users/lucas/Documents/GitHub/easyshortcut/easyshortcut.entitlements -entitlements -format xml -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent
+
+ProcessProductPackagingDER /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent.der (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /usr/bin/derq query -f xml -i /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent.der --raw
+
+GenerateAssetSymbols /Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets --compile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources --output-format human-readable-text --notices --warnings --export-dependency-info /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_dependencies --output-partial-info-plist /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --enable-on-demand-resources NO --development-region en --target-device mac --minimum-deployment-target 14.0 --platform macosx --bundle-identifier com.easyshortcut.easyshortcut --generate-swift-asset-symbols /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.document.warnings */
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets:./StatusIcon.imageset/[mac][][][3x][][][][][][][][][][][2d][StatusIcon@3x.png]: warning: The image set "StatusIcon" has an unassigned child.
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets:./StatusIcon.imageset/[mac][][][3x][][][][][][][][][][][2d][StatusIcon@3x.png]: warning: The image set "StatusIcon" has an unassigned child.
+/* com.apple.actool.compilation-results */
+/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/unthinned (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/unthinned
+
+MkDir /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/thinned (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /bin/mkdir -p /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/thinned
+
+Ld /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/__preview.dylib normal (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -O0 -L/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -install_name @rpath/easyshortcut.debug.dylib -dead_strip -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_dependency_info.dat -Xlinker -no_adhoc_codesign -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/__preview.dylib
+
+CompileAssetCatalogVariant thinned /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources /Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets --compile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --enable-on-demand-resources NO --development-region en --target-device mac --minimum-deployment-target 14.0 --platform macosx
+dyld[90820]: symbol '_kFigCaptionRegionDisplayAlign_Before' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionRegionDisplayAlign_After' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionRegionDisplayAlign_Center' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionTextAlign_Start' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionTextAlign_End' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionTextAlign_Center' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionTextAlign_Left' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigCaptionTextAlign_Right' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_AuthenticationSucceeded' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_iOSUIRequested' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_SiriRequested' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndPointNotification_EnhancedSiriParametersChanged' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_NightModeChanged' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_LimitedUIChanged' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_PerformanceReportPosted' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_UnhandledRemoteEvent' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigEndpointNotification_CarPlayTest' missing from root that overrides /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_NowBelowLowWaterLevel' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_DecodeError' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_Failed' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_ExternalProtectionStatusChanged' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_FlushComplete' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_CompletedDecodeForPreroll' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_FirstVideoFrameEnqueued' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_kFigVideoQueueNotification_LostDecoderState' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_OBJC_CLASS_$_FigBaseCALayer' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+dyld[90820]: symbol '_OBJC_METACLASS_$_FigBaseCALayer' missing from root that overrides /System/Library/Frameworks/MediaToolbox.framework/Versions/A/MediaToolbox. Use of that symbol in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore is being set to 0xBAD4007.
+/* com.apple.actool.notices */
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets: warning: Accent color ‘AccentColor’ is not present in any asset catalogs.
+/* com.apple.actool.document.warnings */
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets:./StatusIcon.imageset/[mac][][][3x][][][][][][][][][][][2d][StatusIcon@3x.png]: warning: The image set "StatusIcon" has an unassigned child.
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets:./StatusIcon.imageset/[mac][][][3x][][][][][][][][][][][2d][StatusIcon@3x.png]: warning: The image set "StatusIcon" has an unassigned child.
+/Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets:./StatusIcon.imageset/[mac][][][3x][][][][][][][][][][][2d][StatusIcon@3x.png]: warning: The image set "StatusIcon" has an unassigned child.
+/* com.apple.actool.compilation-results */
+/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist_thinned
+/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver easyshortcut normal arm64 com.apple.xcode.tools.swift.compiler (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name easyshortcut -Onone -enforce-exclusivity\=checked @/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList -DDEBUG -enable-upcoming-feature ExistentialAny -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.1-25B74-3ae1261907bdadc328169391a47051a6.sdkstatcache -output-file-map /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-generated-files.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-own-target-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-project-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/include -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources-normal/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-Swift.h -working-directory /Users/lucas/Documents/GitHub/easyshortcut -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ ContentView.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Views/ContentView.swift (in target 'easyshortcut' from project 'easyshortcut')
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Views/ContentView.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ ShortcutItem.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Models/ShortcutItem.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Models/ShortcutItem.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ easyshortcut (in target 'easyshortcut' from project 'easyshortcut')
+
+EmitSwiftModule normal arm64 (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ OnboardingWindow.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Views/OnboardingWindow.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Views/OnboardingWindow.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ PermissionsManager.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/PermissionsManager.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/PermissionsManager.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ AppWatcher.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/AppWatcher.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/AppWatcher.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ EasyShortcutApp.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/EasyShortcutApp.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/EasyShortcutApp.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+
+SwiftCompile normal arm64 Compiling\ AccessibilityReader.swift /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/AccessibilityReader.swift (in target 'easyshortcut' from project 'easyshortcut')
+SwiftCompile normal arm64 /Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/AccessibilityReader.swift (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+/Users/lucas/Documents/GitHub/easyshortcut/Sources/Services/AccessibilityReader.swift:191:27: warning: 'as' test is always true
+        } catch let error as AccessibilityError {
+                          ^
+
+SwiftDriverJobDiscovery normal arm64 Compiling GeneratedAssetSymbols.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ShortcutItem.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for easyshortcut (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriver\ Compilation\ Requirements easyshortcut normal arm64 com.apple.xcode.tools.swift.compiler (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name easyshortcut -Onone -enforce-exclusivity\=checked @/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList -DDEBUG -enable-upcoming-feature ExistentialAny -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.1-25B74-3ae1261907bdadc328169391a47051a6.sdkstatcache -output-file-map /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-generated-files.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-own-target-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-project-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/include -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources-normal/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-Swift.h -working-directory /Users/lucas/Documents/GitHub/easyshortcut -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/easyshortcut-Swift.h /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-Swift.h (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-swiftHeaderTool -arch arm64 /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-Swift.h -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/easyshortcut-Swift.h
+
+Copy /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.swiftdoc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftdoc (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftdoc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.swiftmodule /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.abi.json /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.abi.json (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.abi.json /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftsourceinfo (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftsourceinfo /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling EasyShortcutApp.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Compiling PermissionsManager.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AppWatcher.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OnboardingWindow.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+LinkAssetCatalog /Users/lucas/Documents/GitHub/easyshortcut/Assets.xcassets (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-linkAssetCatalog --thinned /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/thinned --thinned-dependencies /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist_unthinned --output /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources --plist-output /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources/Assets.car (in target 'easyshortcut' from project 'easyshortcut')
+
+ProcessInfoPlistFile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Info.plist /Users/lucas/Documents/GitHub/easyshortcut/Info.plist (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-infoPlistUtility /Users/lucas/Documents/GitHub/easyshortcut/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/PkgInfo -expandbuildsettings -platform macosx -additionalcontentfile /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/assetcatalog_generated_info.plist -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Info.plist
+
+SwiftDriverJobDiscovery normal arm64 Compiling ContentView.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AccessibilityReader.swift (in target 'easyshortcut' from project 'easyshortcut')
+
+SwiftDriver\ Compilation easyshortcut normal arm64 com.apple.xcode.tools.swift.compiler (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name easyshortcut -Onone -enforce-exclusivity\=checked @/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList -DDEBUG -enable-upcoming-feature ExistentialAny -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/macosx26.1-25B74-3ae1261907bdadc328169391a47051a6.sdkstatcache -output-file-map /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/lucas/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_const_extract_protocols.json -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-generated-files.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-own-target-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-all-target-headers.hmap -Xcc -iquote -Xcc /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-project-headers.hmap -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/include -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources-normal/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources/arm64 -Xcc -I/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-Swift.h -working-directory /Users/lucas/Documents/GitHub/easyshortcut -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib normal (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -O0 -L/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -filelist /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.LinkFileList -install_name @rpath/easyshortcut.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/../Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.swiftmodule @/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib
+
+ConstructStubExecutorLinkFileList /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-ExecutorLinkFileList-normal-arm64.txt (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    construct-stub-executor-link-file-list /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'easyshortcut' from project 'easyshortcut')
+
+Ld /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut normal (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk -O0 -L/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -F/Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/../Frameworks -rdynamic -Xlinker -no_deduplicate -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut-ExecutorLinkFileList-normal-arm64.txt /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut
+
+CopySwiftLibs /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib --scan-folder /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Frameworks --scan-folder /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/PlugIns --scan-folder /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Library/SystemExtensions --scan-folder /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+
+ExtractAppIntentsMetadata (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name easyshortcut --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk --xcode-version 17B55 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.easyshortcut.easyshortcut --output /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut --dependency-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut_dependency_info.dat --stringsdata-file /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftFileList --metadata-file-list /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyMetadataFileList --static-metadata-file-list /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.DependencyStaticMetadataFileList --swift-const-vals-list /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/Objects-normal/arm64/easyshortcut.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-11-06 16:47:37.068 appintentsmetadataprocessor[90852:2067471] Starting appintentsmetadataprocessor export
+2025-11-06 16:47:37.069 appintentsmetadataprocessor[90852:2067471] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/easyshortcut.debug.dylib
+
+CodeSign /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/__preview.dylib (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app/Contents/MacOS/__preview.dylib
+
+CodeSign /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Intermediates.noindex/easyshortcut.build/Debug/easyshortcut.build/easyshortcut.app.xcent --timestamp\=none --generate-entitlement-der /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app
+
+RegisterExecutionPolicyException /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-RegisterExecutionPolicyException /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app
+
+Validate /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    builtin-validationUtility /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app -no-validate-extension -infoplist-subpath Contents/Info.plist
+
+Touch /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /usr/bin/touch -c /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app
+
+RegisterWithLaunchServices /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app (in target 'easyshortcut' from project 'easyshortcut')
+    cd /Users/lucas/Documents/GitHub/easyshortcut
+    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /Users/lucas/Library/Developer/Xcode/DerivedData/easyshortcut-fsksottlflufgpbbiekdbxizljox/Build/Products/Debug/easyshortcut.app
+
+note: Disabling hardened runtime with ad-hoc codesigning. (in target 'easyshortcut' from project 'easyshortcut')
+** BUILD SUCCEEDED **
+

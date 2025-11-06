@@ -9,43 +9,44 @@ internal import SwiftUI
 
 @main
 struct EasyShortcutApp: App {
-    @State private var permissionsManager = PermissionsManager.shared
-    @State private var showOnboarding = false
-    
+    @Environment(\.openWindow) private var openWindow
+
     var body: some Scene {
         MenuBarExtra("easyshortcut", systemImage: "keyboard") {
             ContentView()
                 .frame(width: 360, height: 500)
         }
         .menuBarExtraStyle(.window)
-        
+        .commands {
+            CommandGroup(after: .appInfo) {
+                Color.clear
+                    .onAppear {
+                        // Start monitoring active app changes
+                        AppWatcher.shared.startMonitoring()
+
+                        // Check permissions on app launch
+                        if !PermissionsManager.shared.checkPermissions() {
+                            // Request permissions which will show system dialog
+                            PermissionsManager.shared.requestPermissions()
+                            // Open onboarding window
+                            openWindow(id: "onboarding")
+                        }
+                    }
+            }
+        }
+
         // Onboarding window
         Window("Setup", id: "onboarding") {
             OnboardingView {
                 // Close onboarding when complete
-                if let window = NSApplication.shared.windows.first(where: { $0.identifier?.rawValue == "onboarding" }) {
-                    window.close()
-                }
+                NSApplication.shared.keyWindow?.close()
             }
         }
         .windowResizability(.contentSize)
         .defaultSize(width: 500, height: 450)
         .windowStyle(.hiddenTitleBar)
-    }
-    
-    init() {
-        // Check permissions on launch
-        let hasPermissions = PermissionsManager.shared.checkPermissions()
-        
-        if !hasPermissions {
-            // Show onboarding window
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if let window = NSApplication.shared.windows.first(where: { $0.identifier?.rawValue == "onboarding" }) {
-                    window.makeKeyAndOrderFront(nil)
-                    NSApp.activate(ignoringOtherApps: true)
-                }
-            }
-        }
+        .defaultPosition(.center)
     }
 }
+
 
