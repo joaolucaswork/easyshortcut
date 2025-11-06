@@ -635,8 +635,10 @@
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>easyshortcut.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
 				<key>CODE_SIGN_STYLE</key>
-				<string>Automatic</string>
+				<string>Manual</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
 				<key>CURRENT_PROJECT_VERSION</key>
@@ -702,8 +704,10 @@
 				<string>YES</string>
 				<key>CODE_SIGN_ENTITLEMENTS</key>
 				<string>easyshortcut.entitlements</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>-</string>
 				<key>CODE_SIGN_STYLE</key>
-				<string>Automatic</string>
+				<string>Manual</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
 				<key>CURRENT_PROJECT_VERSION</key>

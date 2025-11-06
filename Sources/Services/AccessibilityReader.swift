@@ -213,19 +213,30 @@ final class AccessibilityReader: ObservableObject {
         let menus = copyAXArray(menuBar, kAXChildrenAttribute as CFString)
 
         var allShortcuts: [ShortcutItem] = []
+        var roleStats: [String: Int] = [:]
 
         // Iterate through each top-level menu
         for menu in menus {
-            let menuShortcuts = extractShortcuts(from: menu, menuPath: [])
+            let menuShortcuts = extractShortcuts(from: menu, menuPath: [], roleStats: &roleStats)
             allShortcuts.append(contentsOf: menuShortcuts)
         }
+
+        // Log role statistics summary
+        NSLog("📊 Role Statistics Summary:")
+        let sortedRoles = roleStats.sorted { $0.value > $1.value }
+        var totalElements = 0
+        for (role, count) in sortedRoles {
+            NSLog("   \(role): \(count)")
+            totalElements += count
+        }
+        NSLog("   Total elements processed: \(totalElements)")
 
         return allShortcuts
     }
 
     // MARK: - Recursive Menu Traversal
 
-    private func extractShortcuts(from element: AXUIElement, menuPath: [String]) -> [ShortcutItem] {
+    private func extractShortcuts(from element: AXUIElement, menuPath: [String], roleStats: inout [String: Int]) -> [ShortcutItem] {
         var items: [ShortcutItem] = []
 
         // Read title
@@ -241,9 +252,12 @@ final class AccessibilityReader: ObservableObject {
         // Read role to determine element type
         let role: String? = copyAXString(element, kAXRoleAttribute as CFString)
 
+        // Update role statistics
+        let roleKey = role ?? "(no role)"
+        roleStats[roleKey, default: 0] += 1
+
         // Debug: Log role and children count
         let children = copyAXArray(element, kAXChildrenAttribute as CFString)
-        NSLog("🔍 Element: \(title), Role: \(role ?? "nil"), Children count: \(children.count)")
 
         // Read shortcut information
         let cmdChar: String? = copyAXString(element, kAXMenuItemCmdCharAttribute as CFString)
@@ -253,20 +267,39 @@ final class AccessibilityReader: ObservableObject {
         // Read enabled state
         let isEnabled: Bool = copyAXAttribute(element, kAXEnabledAttribute as CFString) ?? true
 
-        // Create shortcut item for this menu item
-        let item = ShortcutItem(
-            title: title,
-            shortcut: shortcut,
-            menuPath: currentPath,
-            isEnabled: isEnabled,
-            role: role,
-            isSeparator: false
-        )
-        items.append(item)
+        // Determine if this element should be added to results
+        let isMenuItem = role == "AXMenuItem"
+        let hasShortcut = shortcut != nil && !shortcut!.isEmpty
+        let shouldAddToResults = isMenuItem && hasShortcut
 
-        // Recursively process children
+        // Enhanced debug logging
+        NSLog("🔍 Processing Element:")
+        NSLog("   Title: \(title)")
+        NSLog("   Role: \(role ?? "nil")")
+        NSLog("   Children: \(children.count)")
+        NSLog("   Raw cmdChar: \(cmdChar ?? "nil")")
+        NSLog("   Raw modifiers: \(modifiers.map { String($0) } ?? "nil")")
+        NSLog("   Parsed shortcut: \(shortcut ?? "nil")")
+        NSLog("   isMenuItem: \(isMenuItem)")
+        NSLog("   hasShortcut: \(hasShortcut)")
+        NSLog("   Will add to results: \(shouldAddToResults)")
+
+        // Only create shortcut item for actual menu items with shortcuts
+        if shouldAddToResults {
+            let item = ShortcutItem(
+                title: title,
+                shortcut: shortcut,
+                menuPath: currentPath,
+                isEnabled: isEnabled,
+                role: role,
+                isSeparator: false
+            )
+            items.append(item)
+        }
+
+        // Recursively process children (ALWAYS executed, regardless of role)
         for child in children {
-            let childItems = extractShortcuts(from: child, menuPath: currentPath)
+            let childItems = extractShortcuts(from: child, menuPath: currentPath, roleStats: &roleStats)
             items.append(contentsOf: childItems)
         }
 
