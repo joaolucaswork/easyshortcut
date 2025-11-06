@@ -12,20 +12,15 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
-    // StatusBarController will be instantiated here in the next phase
-    // var statusBarController: StatusBarController?
-    
+
+    var statusBarController: StatusBarController?
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Initialize the StatusBarController here in the next phase
-        // statusBarController = StatusBarController()
+        statusBarController = StatusBarController()
     }
-    
+
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Cleanup code will be added here in future phases
-        // - Remove status bar item
-        // - Stop monitoring active applications
-        // - Release resources
+        statusBarController = nil
     }
     
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {

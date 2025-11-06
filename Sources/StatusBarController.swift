@@ -16,53 +16,58 @@ import Cocoa
 import SwiftUI
 
 class StatusBarController {
-    
+
     // The menu bar item that appears in the system status bar
-    private var statusItem: NSStatusItem?
-    
+    private let statusItem: NSStatusItem
+
     // The popover window that displays the shortcuts list
-    private var popover: NSPopover?
-    
+    private let popover: NSPopover
+
     init() {
-        // Next phase: Initialize NSStatusItem
-        // statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
-        // Next phase: Configure the status item button
-        // if let button = statusItem?.button {
-        //     button.image = NSImage(named: "StatusIcon")
-        //     button.image?.isTemplate = true  // Allows automatic light/dark mode adaptation
-        //     button.action = #selector(togglePopover)
-        //     button.target = self
-        // }
-        
-        // Next phase: Initialize NSPopover
-        // popover = NSPopover()
-        // popover?.contentSize = NSSize(width: 360, height: 500)
-        // popover?.behavior = .transient  // Auto-closes when clicking outside
-        // popover?.contentViewController = NSHostingController(rootView: ContentView())
+        // Initialize NSStatusItem with local variable
+        let statusItemLocal = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+
+        // Guard against missing button
+        guard let button = statusItemLocal.button else {
+            fatalError("Failed to create status item button")
+        }
+
+        // Configure the status item button
+        button.image = NSImage(named: "StatusIcon")
+        button.image?.isTemplate = true  // Allows automatic light/dark mode adaptation
+        button.action = #selector(togglePopover(_:))
+        button.target = self
+
+        // Initialize NSPopover with local variable
+        let popoverLocal = NSPopover()
+        popoverLocal.contentSize = NSSize(width: 360, height: 500)
+        popoverLocal.behavior = .transient  // Auto-closes when clicking outside
+        popoverLocal.contentViewController = NSHostingController(rootView: ContentView())
+
+        // Assign to non-optional properties after successful initialization
+        self.statusItem = statusItemLocal
+        self.popover = popoverLocal
     }
-    
-    // Next phase: Implement popover toggle functionality
-    // @objc func togglePopover() {
-    //     if let button = statusItem?.button {
-    //         if popover?.isShown == true {
-    //             hidePopover()
-    //         } else {
-    //             showPopover()
-    //         }
-    //     }
-    // }
-    
+
+    @objc func togglePopover(_ sender: AnyObject?) {
+        if popover.isShown {
+            hidePopover()
+        } else {
+            showPopover()
+        }
+    }
+
     func showPopover() {
-        // Next phase: Show the popover relative to the status bar button
-        // if let button = statusItem?.button {
-        //     popover?.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-        // }
+        guard let button = statusItem.button else { return }
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
     }
-    
+
     func hidePopover() {
-        // Next phase: Hide the popover
-        // popover?.performClose(nil)
+        popover.performClose(nil)
+    }
+
+    deinit {
+        NSStatusBar.system.removeStatusItem(statusItem)
     }
 }
 
