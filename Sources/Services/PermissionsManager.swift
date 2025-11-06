@@ -8,22 +8,23 @@
 internal import Foundation
 internal import AppKit
 @preconcurrency import ApplicationServices
-internal import Combine
+internal import Observation
 
 @MainActor
-final class PermissionsManager: ObservableObject {
-    
+@Observable
+final class PermissionsManager {
+
     // MARK: - Singleton
-    
+
     static let shared = PermissionsManager()
-    
-    // MARK: - Published Properties
-    
+
+    // MARK: - Observable Properties
+
     /// Current permission status
-    @Published private(set) var isAccessibilityGranted: Bool = false
-    
+    private(set) var isAccessibilityGranted: Bool = false
+
     /// Whether we're currently monitoring for permission changes
-    @Published private(set) var isMonitoring: Bool = false
+    private(set) var isMonitoring: Bool = false
     
     // MARK: - Private Properties
     

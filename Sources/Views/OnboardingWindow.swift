@@ -10,7 +10,7 @@ internal import AppKit
 
 /// SwiftUI view for the onboarding content
 struct OnboardingView: View {
-    @ObservedObject var permissionsManager = PermissionsManager.shared
+    @State var permissionsManager = PermissionsManager.shared
     let onComplete: () -> Void
     
     var body: some View {
@@ -100,46 +100,5 @@ struct OnboardingView: View {
     }
 }
 
-/// NSWindow subclass for the onboarding window
-@MainActor
-class OnboardingWindowController: NSWindowController {
-    
-    convenience init(onComplete: @escaping () -> Void) {
-        print("🪟 [DEBUG] OnboardingWindowController init called")
 
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 500, height: 450),
-            styleMask: [.titled, .closable],
-            backing: .buffered,
-            defer: false
-        )
-
-        print("🪟 [DEBUG] NSWindow created")
-
-        window.title = "easyshortcut Setup"
-        window.center()
-        window.isReleasedWhenClosed = false
-        window.level = .floating
-
-        print("🪟 [DEBUG] Window configured")
-
-        // Set content view
-        let contentView = OnboardingView(onComplete: onComplete)
-        window.contentView = NSHostingView(rootView: contentView)
-
-        print("🪟 [DEBUG] Content view set")
-
-        self.init(window: window)
-
-        print("🪟 [DEBUG] OnboardingWindowController initialized")
-    }
-    
-    func show() {
-        print("🪟 [DEBUG] show() called")
-        print("🪟 [DEBUG] Window exists: \(window != nil)")
-        window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-        print("🪟 [DEBUG] Window should be visible now")
-    }
-}
 
