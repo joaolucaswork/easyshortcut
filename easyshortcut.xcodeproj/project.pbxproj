@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A1000001000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001000000000000001 /* AppDelegate.swift */; };
-		A1000002000000000000001 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002000000000000001 /* StatusBarController.swift */; };
 		A1000003000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* Assets.xcassets */; };
+		A1000016000000000000001 /* EasyShortcutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016000000000000001 /* EasyShortcutApp.swift */; };
 		A1000010000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ContentView.swift */; };
 		A1000011000000000000001 /* ShortcutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* ShortcutItem.swift */; };
 		A1000012000000000000001 /* AccessibilityReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012000000000000001 /* AccessibilityReader.swift */; };
@@ -19,10 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A3000001000000000000001 /* easyshortcut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = easyshortcut.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2000001000000000000001 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A2000002000000000000001 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		A2000003000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A2000016000000000000001 /* EasyShortcutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyShortcutApp.swift; sourceTree = "<group>"; };
 		A2000004000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000005000000000000001 /* easyshortcut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = easyshortcut.entitlements; sourceTree = "<group>"; };
 		A2000010000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -31,6 +28,7 @@
 		A2000013000000000000001 /* AppWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWatcher.swift; sourceTree = "<group>"; };
 		A2000014000000000000001 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		A2000015000000000000001 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
+		A3000001000000000000001 /* easyshortcut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = easyshortcut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +56,7 @@
 		A5000002000000000000001 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A2000001000000000000001 /* AppDelegate.swift */,
-				A2000002000000000000001 /* StatusBarController.swift */,
+				A2000016000000000000001 /* EasyShortcutApp.swift */,
 				A5000004000000000000001 /* Views */,
 				A5000005000000000000001 /* Models */,
 				A5000006000000000000001 /* Services */,
@@ -130,7 +127,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					A6000001000000000000001 = {
 						CreatedOnToolsVersion = 15.0;
@@ -171,8 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1000001000000000000001 /* AppDelegate.swift in Sources */,
-				A1000002000000000000001 /* StatusBarController.swift in Sources */,
+				A1000016000000000000001 /* EasyShortcutApp.swift in Sources */,
 				A1000010000000000000001 /* ContentView.swift in Sources */,
 				A1000011000000000000001 /* ShortcutItem.swift in Sources */,
 				A1000012000000000000001 /* AccessibilityReader.swift in Sources */,
@@ -219,6 +215,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -243,6 +240,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -282,6 +280,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -299,6 +298,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -308,11 +308,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = easyshortcut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -328,10 +331,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
 				SWIFT_UPCOMING_FEATURE_BARE_SLASH_REGEX = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -341,11 +344,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTOMATION_APPLE_EVENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = easyshortcut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Info.plist;
@@ -361,10 +367,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
 				SWIFT_UPCOMING_FEATURE_BARE_SLASH_REGEX = YES;
+				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
+				SWIFT_UPCOMING_FEATURE_EXISTENTIAL_ANY = YES;
+				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -394,4 +400,3 @@
 	};
 	rootObject = A0000001000000000000001 /* Project object */;
 }
-
