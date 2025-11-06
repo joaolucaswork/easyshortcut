@@ -31,24 +31,39 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Active app header
-            if let appName = appWatcher.activeAppInfo?.name {
-                Text(appName)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 12)
-                    .padding(.bottom, 4)
-            } else {
-                Text("No Active App")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 12)
-                    .padding(.bottom, 4)
+            HStack {
+                if let appName = appWatcher.activeAppInfo?.name {
+                    Text(appName)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                } else {
+                    Text("No Active App")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                // Cache indicator
+                if accessibilityReader.isUsingCache {
+                    HStack(spacing: 4) {
+                        Image(systemName: "bolt.fill")
+                            .font(.caption)
+                        Text("Cached")
+                            .font(.caption)
+                    }
+                    .foregroundColor(.green)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.green.opacity(0.1))
+                    .cornerRadius(4)
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 12)
+            .padding(.top, 12)
+            .padding(.bottom, 4)
 
             // Search field
             HStack {
