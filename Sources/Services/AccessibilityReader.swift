@@ -462,19 +462,20 @@ final class AccessibilityReader: ObservableObject {
     // MARK: - Shortcut Parsing
 
     private func parseShortcut(cmdChar: String?, modifiers: Int?, virtualKey: Int?) -> String? {
-        // Try character-based shortcut first
-        if let cmdChar = cmdChar, !cmdChar.isEmpty {
-            let modifierString = formatModifiers(modifiers)
-            let key = cmdChar.uppercased()
-            return modifierString + key
-        }
-
-        // Fall back to virtual key-based shortcut
+        // Try virtual key-based shortcut first (for function keys, arrow keys, etc.)
+        // This must come first because function keys often have a placeholder character in cmdChar
         if let virtualKey = virtualKey {
             if let keyString = mapVirtualKeyToString(virtualKey) {
                 let modifierString = formatModifiers(modifiers)
                 return modifierString + keyString
             }
+        }
+
+        // Fall back to character-based shortcut for regular keys
+        if let cmdChar = cmdChar, !cmdChar.isEmpty {
+            let modifierString = formatModifiers(modifiers)
+            let key = cmdChar.uppercased()
+            return modifierString + key
         }
 
         // No valid shortcut found
