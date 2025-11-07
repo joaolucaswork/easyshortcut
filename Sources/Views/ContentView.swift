@@ -52,6 +52,7 @@ struct ContentView: View {
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
+                .focusable(false)
                 .onChange(of: viewMode) { _, newMode in
                     searchQuery = ""
                     if newMode == .activeApp {
@@ -95,8 +96,7 @@ struct ContentView: View {
                     }
 
                     Text(headerTitle)
-                        .font(.headline)
-                        .fontWeight(.bold)
+                        .font(.body)
                         .foregroundColor(.primary)
 
                     Spacer()
@@ -205,7 +205,7 @@ struct ContentView: View {
                             .font(.system(size: 12, weight: .semibold))
                             .foregroundColor(.secondary)
                     }
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 8)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         selectedRecentApp = recentApp
@@ -213,6 +213,8 @@ struct ContentView: View {
                             await accessibilityReader.readMenusForSpecificApp(recentApp.app)
                         }
                     }
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(Color.primary.opacity(0.1))
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
