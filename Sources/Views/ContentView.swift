@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var searchQuery = ""
     @State private var viewMode: ViewMode = .activeApp
     @State private var selectedRecentApp: RecentAppInfo?
+    @State private var isHoveringIcon = false
 
     @ObservedObject private var accessibilityReader = AccessibilityReader.shared
     @ObservedObject private var appWatcher = AppWatcher.shared
@@ -72,6 +73,7 @@ struct ContentView: View {
             .padding(.top, 8)
             .padding(.bottom, 8)
 
+            /* Commented out - Original header section
             // Header with back button support (only show when needed)
             if !headerTitle.isEmpty {
                 HStack(spacing: 8) {
@@ -109,20 +111,70 @@ struct ContentView: View {
                 // Divider
                 Divider()
             }
+            */
+
+            // Header for selected recent app (with back button)
+            if viewMode == .recentApps && selectedRecentApp != nil {
+                HStack(spacing: 8) {
+                    // Back button
+                    Button(action: {
+                        selectedRecentApp = nil
+                        searchQuery = ""
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.accentColor)
+                    }
+                    .buttonStyle(.plain)
+
+                    // App icon
+                    if let icon = headerIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+
+                    Text(headerTitle)
+                        .font(.body)
+                        .foregroundColor(.primary)
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+
+                // Divider
+                Divider()
+            }
 
             // Search field (only show when viewing shortcuts)
             if isShowingShortcuts {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    TextField("Search shortcuts...", text: $searchQuery)
-                        .textFieldStyle(.plain)
+                HStack(spacing: 8) {
+                    // App icon (only for Active App mode)
+                    if viewMode == .activeApp, let icon = headerIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 26, height: 26)
+                            .onHover { hovering in
+                                isHoveringIcon = hovering
+                            }
+                            .help(headerTitle)
+                    }
+
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.secondary)
+                        TextField("Search shortcuts...", text: $searchQuery)
+                            .textFieldStyle(.plain)
+                    }
+                    .padding(8)
+                    .background(.thinMaterial)
+                    .cornerRadius(6)
                 }
-                .padding(8)
-                .background(.thinMaterial)
-                .cornerRadius(6)
                 .padding(.horizontal, 12)
-                .padding(.top, 8)
+                .padding(.top, 4)
                 .padding(.bottom, 8)
             }
 
@@ -162,7 +214,15 @@ struct ContentView: View {
                 return "" // Hide header when showing recent apps list
             }
         } else {
-            return appWatcher.activeAppInfo?.name ?? "No Active App"
+            // Ensure we always return a valid app name, never nil or empty
+            if let name = appWatcher.activeAppInfo?.name, !name.isEmpty {
+                return name
+            } else if let bundleID = appWatcher.activeAppInfo?.bundleID {
+                // Fallback to bundle ID if name is not available
+                return bundleID
+            } else {
+                return "No Active App"
+            }
         }
     }
 
