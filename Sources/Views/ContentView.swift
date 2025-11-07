@@ -310,6 +310,19 @@ struct ContentView: View {
                             .foregroundColor(.secondary)
                         TextField("Search shortcuts...", text: $searchQuery)
                             .textFieldStyle(.plain)
+
+                        // Clear button (only visible when there's text)
+                        if !searchQuery.isEmpty {
+                            Button(action: {
+                                searchQuery = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 14))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Clear search")
+                        }
                     }
                     .padding(8)
                     .background(.thinMaterial)
