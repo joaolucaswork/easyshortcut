@@ -15,11 +15,18 @@ struct ContentView: View {
         case recentApps
     }
 
+    enum SortMode: String {
+        case alphabetical = "Alphabetical"
+        case menuOrder = "Menu Order"
+    }
+
     @State private var searchQuery = ""
     @State private var viewMode: ViewMode = .activeApp
     @State private var selectedRecentApp: RecentAppInfo?
     @State private var isHoveringIcon = false
     @State private var showingExportMenu = false
+    @State private var hiddenGroups: Set<String> = []
+    @AppStorage("shortcutSortMode") private var sortMode: SortMode = .menuOrder
 
     @ObservedObject private var accessibilityReader = AccessibilityReader.shared
     @ObservedObject private var appWatcher = AppWatcher.shared
@@ -38,6 +45,139 @@ struct ContentView: View {
             (item.shortcut?.lowercased().contains(query) ?? false) ||
             item.fullPath.lowercased().contains(query)
         }
+    }
+
+    /// Returns all available menu groups (for filter UI)
+    private var availableGroups: [String] {
+        let shortcuts = filteredShortcuts.filter { shortcut in
+            guard let firstMenu = shortcut.menuPath.first else { return false }
+            return !firstMenu.isEmpty && firstMenu != "Apple" && firstMenu != ""
+        }
+
+        var seenGroups = Set<String>()
+        var groupOrder: [String] = []
+        for shortcut in shortcuts {
+            if let firstMenu = shortcut.menuPath.first, !seenGroups.contains(firstMenu) {
+                seenGroups.insert(firstMenu)
+                groupOrder.append(firstMenu)
+            }
+        }
+
+        return groupOrder
+    }
+
+    /// Groups shortcuts by their top-level menu path, filtering out Apple menu and hidden groups
+    private var groupedShortcuts: [(menuGroup: String, shortcuts: [ShortcutItem])] {
+        // Filter out Apple menu shortcuts (empty string, Apple symbol, or "Apple")
+        let shortcuts = filteredShortcuts.filter { shortcut in
+            guard let firstMenu = shortcut.menuPath.first else { return false }
+            // Filter out empty strings and common Apple menu identifiers
+            return !firstMenu.isEmpty && firstMenu != "Apple" && firstMenu != ""
+        }
+
+        // Group by first element of menuPath
+        let grouped = Dictionary(grouping: shortcuts) { shortcut -> String in
+            shortcut.menuPath.first ?? "Other"
+        }
+
+        // Sort groups and shortcuts based on selected sort mode
+        let sortedGroups: [(menuGroup: String, shortcuts: [ShortcutItem])]
+
+        switch sortMode {
+        case .alphabetical:
+            // Sort both groups and shortcuts alphabetically
+            sortedGroups = grouped.sorted { $0.key < $1.key }.map { (menuGroup: $0.key, shortcuts: $0.value.sorted { $0.title < $1.title }) }
+        case .menuOrder:
+            // Keep both groups and shortcuts in their original menu order
+            // Groups are sorted by the order they appear in the original shortcuts array
+            var seenGroups = Set<String>()
+            var groupOrder: [String] = []
+            for shortcut in shortcuts {
+                if let firstMenu = shortcut.menuPath.first, !seenGroups.contains(firstMenu) {
+                    seenGroups.insert(firstMenu)
+                    groupOrder.append(firstMenu)
+                }
+            }
+
+            sortedGroups = groupOrder.compactMap { menuGroup in
+                guard let items = grouped[menuGroup] else { return nil }
+                return (menuGroup: menuGroup, shortcuts: items)
+            }
+        }
+
+        // Filter out hidden groups
+        return sortedGroups.filter { !hiddenGroups.contains($0.menuGroup) }
+    }
+
+    /// Parses a shortcut string into individual key components
+    /// Example: "⌘⇧N" -> ["⌘", "⇧", "N"]
+    /// Example: "⌘F1" -> ["⌘", "F1"]
+    /// Example: "⇧F10" -> ["⇧", "F10"]
+    private func parseShortcutKeys(_ shortcut: String) -> [String] {
+        var keys: [String] = []
+        var currentKey = ""
+
+        // Modifier symbols that should be separate keys
+        let modifierSymbols: Set<Character> = ["⌘", "⇧", "⌥", "⌃"]
+
+        // Special single-character symbols that should be separate keys
+        let specialSymbols: Set<Character> = ["↑", "↓", "←", "→", "⌫", "⌦", "⎋", "↩", "⌅", "⇥", "↖", "↘", "⇞", "⇟", "⌧", "?⃝"]
+
+        // Special multi-character keys that should stay together (sorted by length, longest first)
+        let multiCharKeys = ["Space", "F20", "F19", "F18", "F17", "F16", "F15", "F14", "F13",
+                             "F12", "F11", "F10", "F9", "F8", "F7", "F6", "F5", "F4", "F3", "F2", "F1"]
+
+        var i = shortcut.startIndex
+        while i < shortcut.endIndex {
+            let char = shortcut[i]
+
+            // Check if this is a modifier symbol or special symbol
+            if modifierSymbols.contains(char) || specialSymbols.contains(char) {
+                // Add any accumulated key first
+                if !currentKey.isEmpty {
+                    keys.append(currentKey)
+                    currentKey = ""
+                }
+                // Add the symbol
+                keys.append(String(char))
+                i = shortcut.index(after: i)
+                continue
+            }
+
+            // Check if we're starting a multi-character key
+            var foundMultiCharKey = false
+            for multiKey in multiCharKeys {
+                let endIndex = shortcut.index(i, offsetBy: multiKey.count, limitedBy: shortcut.endIndex)
+                if let endIndex = endIndex {
+                    let substring = String(shortcut[i..<endIndex])
+                    if substring == multiKey {
+                        // Add any accumulated key first
+                        if !currentKey.isEmpty {
+                            keys.append(currentKey)
+                            currentKey = ""
+                        }
+                        // Add the multi-character key
+                        keys.append(multiKey)
+                        i = endIndex
+                        foundMultiCharKey = true
+                        break
+                    }
+                }
+            }
+
+            if !foundMultiCharKey {
+                // Regular character - accumulate it
+                currentKey.append(char)
+                i = shortcut.index(after: i)
+            }
+        }
+
+        // Add any remaining accumulated key
+        if !currentKey.isEmpty {
+            keys.append(currentKey)
+        }
+
+        return keys
     }
 
     private var isShowingShortcuts: Bool {
@@ -164,6 +304,7 @@ struct ContentView: View {
                             .help(headerTitle)
                     }
 
+                    // Search bar - takes remaining available width
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.secondary)
@@ -173,8 +314,9 @@ struct ContentView: View {
                     .padding(8)
                     .background(.thinMaterial)
                     .cornerRadius(6)
+                    .layoutPriority(1)
 
-                    // Export button
+                    // Export button (no background)
                     Button(action: {
                         exportShortcuts()
                     }) {
@@ -182,11 +324,68 @@ struct ContentView: View {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.secondary)
                             .frame(width: 28, height: 28)
+                    }
+                    .buttonStyle(.plain)
+                    .fixedSize()
+                    .help("Export shortcuts to Markdown")
+
+                    // Sort menu button (three-dot menu)
+                    Menu {
+                        // Filter section
+                        Section(header: Text("Filter Groups")) {
+                            ForEach(availableGroups, id: \.self) { group in
+                                Button(action: {
+                                    toggleGroupVisibility(group)
+                                }) {
+                                    HStack {
+                                        Text(group)
+                                        Spacer()
+                                        if !hiddenGroups.contains(group) {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Divider()
+
+                        // Sort section
+                        Section(header: Text("Sort Order")) {
+                            Button(action: {
+                                sortMode = .alphabetical
+                            }) {
+                                HStack {
+                                    Text("Alphabetical Order")
+                                    if sortMode == .alphabetical {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+
+                            Button(action: {
+                                sortMode = .menuOrder
+                            }) {
+                                HStack {
+                                    Text("Menu Order")
+                                    if sortMode == .menuOrder {
+                                        Image(systemName: "checkmark")
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.secondary)
+                            .frame(width: 28, height: 28)
                             .background(.thinMaterial)
                             .cornerRadius(6)
                     }
-                    .buttonStyle(.plain)
-                    .help("Export shortcuts to Markdown")
+                    .menuStyle(.borderlessButton)
+                    .menuIndicator(.hidden)
+                    .fixedSize()
+                    .help("Filter and sort shortcuts")
                 }
                 .padding(.horizontal, 12)
                 .padding(.top, 4)
@@ -318,40 +517,77 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                List(filteredShortcuts) { item in
-                    HStack(alignment: .top, spacing: 8) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(item.title)
-                                .foregroundColor(item.isEnabled ? .primary : .secondary)
-                            Text(item.fullPath)
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: []) {
+                        ForEach(groupedShortcuts, id: \.menuGroup) { group in
+                            VStack(alignment: .leading, spacing: 0) {
+                                // Section header
+                                Text(group.menuGroup)
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 16)
+                                    .padding(.top, 16)
+                                    .padding(.bottom, 8)
 
-                        Spacer()
+                                // Divider below header
+                                Divider()
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 4)
 
-                        if let shortcut = item.shortcut {
-                            Text(shortcut)
-                                .font(.system(.body, design: .monospaced))
-                                .foregroundColor(item.isEnabled ? .primary : .secondary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(.ultraThinMaterial)
-                                .cornerRadius(4)
+                                // Shortcuts in this group
+                                ForEach(group.shortcuts) { item in
+                                    HStack(alignment: .center, spacing: 12) {
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(item.title)
+                                                .foregroundColor(item.isEnabled ? .primary : .secondary)
+
+                                            // Show submenu path if it exists (everything after the first menu)
+                                            if item.menuPath.count > 1 {
+                                                Text(item.menuPath.dropFirst().joined(separator: " > "))
+                                                    .font(.caption)
+                                                    .foregroundColor(.secondary)
+                                            }
+                                        }
+
+                                        Spacer()
+
+                                        // Display each key in its own box
+                                        if let shortcut = item.shortcut {
+                                            HStack(spacing: 4) {
+                                                ForEach(parseShortcutKeys(shortcut), id: \.self) { key in
+                                                    Text(key)
+                                                        .font(.system(size: 13, weight: .medium, design: .monospaced))
+                                                        .foregroundColor(item.isEnabled ? .primary : .secondary)
+                                                        .padding(.horizontal, 8)
+                                                        .padding(.vertical, 4)
+                                                        .background(Color.primary.opacity(0.08))
+                                                        .cornerRadius(6)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 10)
+                                    .opacity(item.isEnabled ? 1.0 : 0.6)
+                                }
+                            }
                         }
                     }
-                    .padding(.vertical, 4)
-                    .opacity(item.isEnabled ? 1.0 : 0.6)
-                    .listRowSeparator(.visible)
-                    .listRowSeparatorTint(Color.primary.opacity(0.1))
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
             }
         }
     }
 
     // MARK: - Actions
+
+    /// Toggles the visibility of a shortcut group
+    private func toggleGroupVisibility(_ group: String) {
+        if hiddenGroups.contains(group) {
+            hiddenGroups.remove(group)
+        } else {
+            hiddenGroups.insert(group)
+        }
+    }
 
     /// Exports the current shortcuts to a Markdown file
     private func exportShortcuts() {

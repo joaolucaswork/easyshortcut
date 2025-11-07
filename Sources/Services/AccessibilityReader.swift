@@ -277,10 +277,9 @@ final class AccessibilityReader: ObservableObject {
         let pid = app.processIdentifier
         let appElement = AXUIElementCreateApplication(pid)
 
-        // Get menu bar
-        guard let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) else {
-            throw .menuBarNotAccessible
-        }
+        // Get menu bar - may need to activate the app first
+        // Many apps only expose their menu bar when they are frontmost
+        let menuBar: AXUIElement = try await getMenuBarWithActivation(appElement: appElement, app: app, appName: app.localizedName ?? "Unknown")
 
         // Get menu bar children (top-level menus)
         let menus = copyAXArray(menuBar, kAXChildrenAttribute as CFString)
@@ -305,6 +304,56 @@ final class AccessibilityReader: ObservableObject {
         NSLog("   Total elements processed: \(totalElements)")
 
         return allShortcuts
+    }
+
+    // MARK: - Menu Bar Access with App Activation
+
+    /// Attempts to get the menu bar, activating the app if necessary
+    /// Many apps only expose their menu bar when they are the frontmost application
+    /// - Parameters:
+    ///   - appElement: The AXUIElement for the application
+    ///   - app: The NSRunningApplication to activate if needed
+    ///   - appName: The application name for logging
+    /// - Returns: The menu bar AXUIElement
+    /// - Throws: AccessibilityError.menuBarNotAccessible if menu bar cannot be accessed
+    private func getMenuBarWithActivation(appElement: AXUIElement, app: NSRunningApplication, appName: String) async throws(AccessibilityError) -> AXUIElement {
+        // First attempt: Try to get menu bar without activating
+        if let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) {
+            NSLog("✅ AccessibilityReader: Menu bar accessible for \(appName) without activation")
+            return menuBar
+        }
+
+        // Second attempt: Activate the app and try again
+        NSLog("⚠️ AccessibilityReader: Menu bar not accessible for \(appName), activating app...")
+
+        // Activate the application to make its menu bar accessible
+        let activated = app.activate(options: [.activateIgnoringOtherApps])
+
+        if !activated {
+            NSLog("❌ AccessibilityReader: Failed to activate \(appName)")
+            throw .menuBarNotAccessible
+        }
+
+        // Wait a brief moment for the app to become active and menu bar to be available
+        try? await Task.sleep(nanoseconds: 100_000_000) // 100ms
+
+        // Try to get the menu bar again
+        if let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) {
+            NSLog("✅ AccessibilityReader: Menu bar accessible for \(appName) after activation")
+            return menuBar
+        }
+
+        // Final attempt with a bit more delay
+        try? await Task.sleep(nanoseconds: 100_000_000) // Another 100ms
+
+        if let menuBar: AXUIElement = copyAXAttribute(appElement, kAXMenuBarAttribute as CFString) {
+            NSLog("✅ AccessibilityReader: Menu bar accessible for \(appName) after extended wait")
+            return menuBar
+        }
+
+        // All attempts failed
+        NSLog("❌ AccessibilityReader: Menu bar not accessible for \(appName) even after activation")
+        throw .menuBarNotAccessible
     }
 
     // MARK: - Recursive Menu Traversal
@@ -413,19 +462,20 @@ final class AccessibilityReader: ObservableObject {
     // MARK: - Shortcut Parsing
 
     private func parseShortcut(cmdChar: String?, modifiers: Int?, virtualKey: Int?) -> String? {
-        // Try character-based shortcut first
-        if let cmdChar = cmdChar, !cmdChar.isEmpty {
-            let modifierString = formatModifiers(modifiers)
-            let key = cmdChar.uppercased()
-            return modifierString + key
-        }
-
-        // Fall back to virtual key-based shortcut
+        // Try virtual key-based shortcut first (for function keys, arrow keys, etc.)
+        // This must come first because function keys often have a placeholder character in cmdChar
         if let virtualKey = virtualKey {
             if let keyString = mapVirtualKeyToString(virtualKey) {
                 let modifierString = formatModifiers(modifiers)
                 return modifierString + keyString
             }
+        }
+
+        // Fall back to character-based shortcut for regular keys
+        if let cmdChar = cmdChar, !cmdChar.isEmpty {
+            let modifierString = formatModifiers(modifiers)
+            let key = cmdChar.uppercased()
+            return modifierString + key
         }
 
         // No valid shortcut found
