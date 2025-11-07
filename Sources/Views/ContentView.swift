@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var viewMode: ViewMode = .activeApp
     @State private var selectedRecentApp: RecentAppInfo?
     @State private var isHoveringIcon = false
+    @State private var showingExportMenu = false
 
     @ObservedObject private var accessibilityReader = AccessibilityReader.shared
     @ObservedObject private var appWatcher = AppWatcher.shared
@@ -172,6 +173,20 @@ struct ContentView: View {
                     .padding(8)
                     .background(.thinMaterial)
                     .cornerRadius(6)
+
+                    // Export button
+                    Button(action: {
+                        exportShortcuts()
+                    }) {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.secondary)
+                            .frame(width: 28, height: 28)
+                            .background(.thinMaterial)
+                            .cornerRadius(6)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Export shortcuts to Markdown")
                 }
                 .padding(.horizontal, 12)
                 .padding(.top, 4)
@@ -334,6 +349,21 @@ struct ContentView: View {
                 .scrollContentBackground(.hidden)
             }
         }
+    }
+
+    // MARK: - Actions
+
+    /// Exports the current shortcuts to a Markdown file
+    private func exportShortcuts() {
+        let shortcuts = filteredShortcuts
+        let appName = headerTitle
+
+        guard !shortcuts.isEmpty else {
+            NSLog("⚠️ ContentView: No shortcuts to export")
+            return
+        }
+
+        MarkdownExporter.shared.exportToMarkdown(shortcuts: shortcuts, appName: appName)
     }
 }
 
