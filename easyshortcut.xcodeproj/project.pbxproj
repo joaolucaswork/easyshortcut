@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33F0A98CF4A44831DA801D1C /* MarkdownExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93DC4E83C7E8E291C5D565A /* MarkdownExporter.swift */; };
 		A1000003000000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000003000000000000001 /* Assets.xcassets */; };
 		A1000010000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000001 /* ContentView.swift */; };
 		A1000011000000000000001 /* ShortcutItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000001 /* ShortcutItem.swift */; };
@@ -37,6 +38,7 @@
 		A2000018000000000000001 /* MenuCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCacheManager.swift; sourceTree = "<group>"; };
 		A2000019000000000000001 /* RecentAppsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAppsManager.swift; sourceTree = "<group>"; };
 		A3000001000000000000001 /* easyshortcut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = easyshortcut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93DC4E83C7E8E291C5D565A /* MarkdownExporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownExporter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				A2000018000000000000001 /* MenuCacheManager.swift */,
 				A2000019000000000000001 /* RecentAppsManager.swift */,
 				5D3567806D4D05A84DC9CD28 /* StatusBarController.swift */,
+				A93DC4E83C7E8E291C5D565A /* MarkdownExporter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				A1000018000000000000001 /* MenuCacheManager.swift in Sources */,
 				A1000019000000000000001 /* RecentAppsManager.swift in Sources */,
 				B1DB8D3B56EA99A76ED0247C /* StatusBarController.swift in Sources */,
+				33F0A98CF4A44831DA801D1C /* MarkdownExporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
