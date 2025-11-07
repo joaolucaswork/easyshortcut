@@ -9,9 +9,20 @@
 internal import SwiftUI
 
 struct ContentView: View {
+    // MARK: - View State
+    enum ViewMode {
+        case activeApp
+        case recentApps
+    }
+
     @State private var searchQuery = ""
+    @State private var viewMode: ViewMode = .activeApp
+    @State private var selectedRecentApp: RecentAppInfo?
+    @State private var isHoveringIcon = false
+
     @ObservedObject private var accessibilityReader = AccessibilityReader.shared
     @ObservedObject private var appWatcher = AppWatcher.shared
+    @ObservedObject private var recentAppsManager = RecentAppsManager.shared
 
     private var filteredShortcuts: [ShortcutItem] {
         let shortcuts = accessibilityReader.shortcuts.filter { $0.hasShortcut }
@@ -28,55 +39,147 @@ struct ContentView: View {
         }
     }
 
+    private var isShowingShortcuts: Bool {
+        viewMode == .activeApp || selectedRecentApp != nil
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            // Active app header
-            HStack(spacing: 8) {
-                // App icon
-                if let app = appWatcher.activeAppInfo?.app,
-                   let icon = app.icon {
-                    Image(nsImage: icon)
-                        .resizable()
-                        .frame(width: 20, height: 20)
+            // Segmented Picker for mode switching (moved to top)
+            HStack {
+                Picker("", selection: $viewMode) {
+                    Text("Active App").tag(ViewMode.activeApp)
+                    Text("Recent Apps").tag(ViewMode.recentApps)
                 }
-
-                if let appName = appWatcher.activeAppInfo?.name {
-                    Text(appName)
-                        .font(.headline)
-                        .fontWeight(.bold)
-                } else {
-                    Text("No Active App")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .focusable(false)
+                .onChange(of: viewMode) { _, newMode in
+                    searchQuery = ""
+                    if newMode == .activeApp {
+                        selectedRecentApp = nil
+                        // Trigger reload of active app if needed
+                        if let activeApp = appWatcher.activeAppInfo {
+                            if accessibilityReader.displayedAppInfo?.bundleID != activeApp.bundleID {
+                                accessibilityReader.refresh()
+                            }
+                        }
+                    }
                 }
 
                 Spacer()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .padding(.bottom, 12)
-
-            // Divider
-            Divider()
-
-            // Search field
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                TextField("Search shortcuts...", text: $searchQuery)
-                    .textFieldStyle(.plain)
-            }
-            .padding(8)
-            .background(.thinMaterial)
-            .cornerRadius(6)
             .padding(.horizontal, 12)
             .padding(.top, 8)
             .padding(.bottom, 8)
 
-            // Error state
-            if let error = accessibilityReader.lastError {
+            /* Commented out - Original header section
+            // Header with back button support (only show when needed)
+            if !headerTitle.isEmpty {
+                HStack(spacing: 8) {
+                    // Back button when viewing a selected recent app
+                    if viewMode == .recentApps && selectedRecentApp != nil {
+                        Button(action: {
+                            selectedRecentApp = nil
+                            searchQuery = ""
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    // App icon
+                    if let icon = headerIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+
+                    Text(headerTitle)
+                        .font(.body)
+                        .foregroundColor(.primary)
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+
+                // Divider
+                Divider()
+            }
+            */
+
+            // Header for selected recent app (with back button)
+            if viewMode == .recentApps && selectedRecentApp != nil {
+                HStack(spacing: 8) {
+                    // Back button
+                    Button(action: {
+                        selectedRecentApp = nil
+                        searchQuery = ""
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.accentColor)
+                    }
+                    .buttonStyle(.plain)
+
+                    // App icon
+                    if let icon = headerIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+
+                    Text(headerTitle)
+                        .font(.body)
+                        .foregroundColor(.primary)
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+
+                // Divider
+                Divider()
+            }
+
+            // Search field (only show when viewing shortcuts)
+            if isShowingShortcuts {
+                HStack(spacing: 8) {
+                    // App icon (only for Active App mode)
+                    if viewMode == .activeApp, let icon = headerIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 26, height: 26)
+                            .onHover { hovering in
+                                isHoveringIcon = hovering
+                            }
+                            .help(headerTitle)
+                    }
+
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.secondary)
+                        TextField("Search shortcuts...", text: $searchQuery)
+                            .textFieldStyle(.plain)
+                    }
+                    .padding(8)
+                    .background(.thinMaterial)
+                    .cornerRadius(6)
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 4)
+                .padding(.bottom, 8)
+            }
+
+            // Error state (only show when viewing shortcuts)
+            if isShowingShortcuts, let error = accessibilityReader.lastError {
                 HStack {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
@@ -88,7 +191,99 @@ struct ContentView: View {
                 .padding(.vertical, 4)
             }
 
-            // Shortcuts list
+            // Content area - conditional based on mode
+            if viewMode == .recentApps && selectedRecentApp == nil {
+                // Recent Apps List
+                recentAppsListView
+            } else {
+                // Shortcuts List (for active app or selected recent app)
+                shortcutsListView
+            }
+        }
+        .padding(12)
+        .frame(width: 360, height: 500)
+    }
+
+    // MARK: - Computed Properties
+
+    private var headerTitle: String {
+        if viewMode == .recentApps {
+            if let selectedApp = selectedRecentApp {
+                return selectedApp.name
+            } else {
+                return "" // Hide header when showing recent apps list
+            }
+        } else {
+            // Ensure we always return a valid app name, never nil or empty
+            if let name = appWatcher.activeAppInfo?.name, !name.isEmpty {
+                return name
+            } else if let bundleID = appWatcher.activeAppInfo?.bundleID {
+                // Fallback to bundle ID if name is not available
+                return bundleID
+            } else {
+                return "No Active App"
+            }
+        }
+    }
+
+    private var headerIcon: NSImage? {
+        if viewMode == .recentApps {
+            return selectedRecentApp?.icon
+        } else {
+            return appWatcher.activeAppInfo?.app.icon
+        }
+    }
+
+    // MARK: - View Components
+
+    private var recentAppsListView: some View {
+        Group {
+            if recentAppsManager.recentApps.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 32))
+                        .foregroundColor(.secondary)
+                    Text("No recent apps")
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List(recentAppsManager.recentApps, id: \.bundleID) { recentApp in
+                    HStack(spacing: 12) {
+                        if let icon = recentApp.icon {
+                            Image(nsImage: icon)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+
+                        Text(recentApp.name)
+                            .font(.body)
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical, 8)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        selectedRecentApp = recentApp
+                        Task {
+                            await accessibilityReader.readMenusForSpecificApp(recentApp.app)
+                        }
+                    }
+                    .listRowSeparator(.visible)
+                    .listRowSeparatorTint(Color.primary.opacity(0.1))
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+            }
+        }
+    }
+
+    private var shortcutsListView: some View {
+        Group {
             if accessibilityReader.isReading {
                 VStack {
                     ProgressView()
@@ -139,8 +334,6 @@ struct ContentView: View {
                 .scrollContentBackground(.hidden)
             }
         }
-        .padding(12)
-        .frame(width: 360, height: 500)
     }
 }
 
