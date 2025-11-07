@@ -14,7 +14,6 @@ internal final class StatusBarController: NSObject {
 
     private var statusItem: NSStatusItem?
     private var popover: NSPopover?
-    var shouldShowOnboarding: (() -> Void)?
 
     private override init() {
         super.init()

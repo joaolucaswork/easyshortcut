@@ -42,6 +42,9 @@ final class AccessibilityReader: ObservableObject {
     /// Indicates if the current shortcuts are from cache
     @Published private(set) var isUsingCache: Bool = false
 
+    /// Tracks which app's shortcuts are currently displayed
+    @Published private(set) var displayedAppInfo: (name: String, icon: NSImage?, bundleID: String)?
+
     // MARK: - Private Properties
     
     /// Store Combine subscription to AppWatcher
@@ -145,6 +148,13 @@ final class AccessibilityReader: ObservableObject {
 
         print("📱 AccessibilityReader: Reading menus for specific app: \(app.localizedName ?? "Unknown") (\(app.bundleIdentifier ?? "no bundle ID"))")
 
+        // Update displayed app info
+        displayedAppInfo = (
+            name: app.localizedName ?? "Unknown",
+            icon: app.icon,
+            bundleID: app.bundleIdentifier ?? ""
+        )
+
         // Read menus
         await readMenus(for: app)
     }
@@ -179,6 +189,13 @@ final class AccessibilityReader: ObservableObject {
 
         lastReadBundleID = activeApp.bundleID
         print("📱 AccessibilityReader: Reading menus for app: \(activeApp.name ?? "Unknown") (\(activeApp.bundleID ?? "no bundle ID"))")
+
+        // Update displayed app info for active app
+        displayedAppInfo = (
+            name: activeApp.name ?? "Unknown",
+            icon: activeApp.app.icon,
+            bundleID: activeApp.bundleID ?? ""
+        )
 
         // Get running application
         guard let bundleID = activeApp.bundleID,
