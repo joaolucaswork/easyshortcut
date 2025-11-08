@@ -261,14 +261,10 @@ final class AccessibilityReader: ObservableObject {
                     }
                 }
             }
-        } catch let error as AccessibilityError {
+        } catch {
             shortcuts = []
             lastError = error.localizedDescription
             NSLog("❌ AccessibilityReader: Error - \(error.localizedDescription)")
-        } catch {
-            shortcuts = []
-            lastError = "Unknown error: \(error.localizedDescription)"
-            NSLog("❌ AccessibilityReader: Unknown error - \(error.localizedDescription)")
         }
     }
 
@@ -327,7 +323,7 @@ final class AccessibilityReader: ObservableObject {
         NSLog("⚠️ AccessibilityReader: Menu bar not accessible for \(appName), activating app...")
 
         // Activate the application to make its menu bar accessible
-        let activated = app.activate(options: [.activateIgnoringOtherApps])
+        let activated = app.activate()
 
         if !activated {
             NSLog("❌ AccessibilityReader: Failed to activate \(appName)")

@@ -78,6 +78,11 @@ iOSInjectionProject/
 # macOS
 .DS_Store
 
+# Build artifacts and temporary files
+dmg_temp/
+*.dmg
+*.log
+
 # IDEs
 .vscode/
 .idea/

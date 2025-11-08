@@ -25,8 +25,11 @@ internal final class StatusBarController: NSObject {
 
         guard let button = statusItem?.button else { return }
 
-        // Set icon
-        button.image = NSImage(systemSymbolName: "keyboard", accessibilityDescription: "easyshortcut")
+        // Set icon - using custom bus logo from asset catalog
+        // The StatusIcon is configured as a template image, so it will automatically
+        // adapt to light/dark mode and menu bar appearance
+        button.image = NSImage(named: "StatusIcon")
+        button.image?.isTemplate = true
 
         // Set action and target
         button.action = #selector(handleClick(_:))

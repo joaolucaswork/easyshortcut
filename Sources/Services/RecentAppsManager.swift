@@ -46,7 +46,7 @@ final class RecentAppsManager: ObservableObject {
     private let maxRecentApps = 10
     
     /// Notification observer for app activation
-    private var observer: NSObjectProtocol?
+    private var observer: (any NSObjectProtocol)?
     
     /// Whether monitoring is active
     private var isMonitoring = false

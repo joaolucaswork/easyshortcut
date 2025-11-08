@@ -1,0 +1,16 @@
+# Exclude DMG temporary directory
+dmg_temp/
+
+# Exclude build outputs
+dist/
+build/
+
+# Exclude node modules
+node_modules/
+
+# Exclude logs
+*.log
+
+# Exclude cache
+.cache/
+
